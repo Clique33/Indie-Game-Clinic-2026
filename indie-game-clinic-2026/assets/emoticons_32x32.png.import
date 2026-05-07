@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7vt4ytna8rcc"
-path="res://.godot/imported/32x32_Steampunk_Lamps.png-ac98d4ccf6bd30359dfcda486f4c1399.ctex"
+uid="uid://vhpylklm7lw4"
+path="res://.godot/imported/emoticons_32x32.png-ec7eea2bbecb995002bfeb763149f9aa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/32x32_Steampunk_Lamps.png"
-dest_files=["res://.godot/imported/32x32_Steampunk_Lamps.png-ac98d4ccf6bd30359dfcda486f4c1399.ctex"]
+source_file="res://assets/emoticons_32x32.png"
+dest_files=["res://.godot/imported/emoticons_32x32.png-ec7eea2bbecb995002bfeb763149f9aa.ctex"]
 
 [params]
 

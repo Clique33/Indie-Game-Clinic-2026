@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://fi8thhimw1r0"]
+
+[ext_resource type="Script" uid="uid://cmsb0w8brow50" path="res://entities/lamps/lamp.gd" id="1_5bncg"]
+[ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="2_0y5yf"]
+[ext_resource type="Texture2D" uid="uid://bupi4ajconhgj" path="res://assets/Pixel Flame Spritesheet.png" id="3_0y5yf"]
+[ext_resource type="Texture2D" uid="uid://7vt4ytna8rcc" path="res://assets/lamps_32x32.png" id="3_5w0pm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5bncg"]
+radius = 3.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bls4j"]
+atlas = ExtResource("3_0y5yf")
+region = Rect2(0, 0, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkugw"]
+atlas = ExtResource("3_0y5yf")
+region = Rect2(7, 0, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8fjmc"]
+atlas = ExtResource("3_0y5yf")
+region = Rect2(14, 0, 7, 7)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiwj3"]
+atlas = ExtResource("3_0y5yf")
+region = Rect2(21, 0, 7, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5w0pm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bls4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkugw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8fjmc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiwj3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Lamp" type="Sprite2D" unique_id=1076608020]
+texture_filter = 1
+texture = ExtResource("3_5w0pm")
+offset = Vector2(-1, -8)
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+script = ExtResource("1_5bncg")
+
+[node name="IluminableArea" type="Area2D" parent="." unique_id=1017534225]
+position = Vector2(-0.5, -3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="IluminableArea" unique_id=795687449]
+visible = false
+shape = SubResource("CircleShape2D_5bncg")
+
+[node name="FlameSprite" type="AnimatedSprite2D" parent="." unique_id=1189775636]
+show_behind_parent = true
+texture_filter = 1
+position = Vector2(-0.5, -3.5)
+scale = Vector2(1e-05, 1e-05)
+sprite_frames = SubResource("SpriteFrames_5w0pm")
+autoplay = "default"
+offset = Vector2(0, -3.5)
+
+[node name="PointLight2D" type="PointLight2D" parent="FlameSprite" unique_id=70085248]
+position = Vector2(0, 2.5)
+color = Color(1, 0.78933334, 0.20999998, 1)
+energy = 0.0
+shadow_enabled = true
+texture = ExtResource("2_0y5yf")
+texture_scale = 0.2
+height = 125.0
+
+[node name="FullyDimTimer" type="Timer" parent="." unique_id=998509370]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="area_entered" from="IluminableArea" to="." method="_on_iluminable_area_area_entered"]
+[connection signal="area_exited" from="IluminableArea" to="." method="_on_iluminable_area_area_exited"]
+[connection signal="timeout" from="FullyDimTimer" to="." method="_on_fully_dim_timer_timeout"]

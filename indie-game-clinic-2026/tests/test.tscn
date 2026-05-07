@@ -1,8 +1,24 @@
 [gd_scene format=3 uid="uid://dg6sve8kidkd3"]
 
+[ext_resource type="Texture2D" uid="uid://b713vvya8x7ii" path="res://assets/icon.svg" id="1_7517i"]
 [ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="1_yggfj"]
+[ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="2_eig8f"]
 
 [node name="Test" type="Node2D" unique_id=7882562]
+y_sort_enabled = true
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=1753961931]
+texture_filter = 1
+position = Vector2(-36, -31.999998)
+scale = Vector2(3.0546875, 1.9453125)
+texture = ExtResource("1_7517i")
+centered = false
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
+color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." unique_id=1459404749 instance=ExtResource("1_yggfj")]
 position = Vector2(130, 65)
+
+[node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
+position = Vector2(240, 48)

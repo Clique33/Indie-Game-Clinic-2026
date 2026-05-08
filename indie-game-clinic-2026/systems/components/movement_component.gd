@@ -1,5 +1,5 @@
 extends Component
-
+class_name MovementComponent
 
 @export var speed : float = 80.0
 

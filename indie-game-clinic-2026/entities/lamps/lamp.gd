@@ -66,8 +66,8 @@ func alternate(time : float = time_to_alternate) -> void:
 func _on_iluminable_area_area_entered(area: Area2D) -> void:
 	if not area.get_parent():
 		return
-	print('can iluminate')
-	if area.get_parent() is Player:
+	print('d iluminate')
+	if area.get_parent() is Flame:
 		_is_player_in_range = true
 
 
@@ -75,7 +75,7 @@ func _on_iluminable_area_area_exited(area: Area2D) -> void:
 	if not area.get_parent():
 		return
 	print('cannot iluminate')
-	if area.get_parent() is Player:
+	if area.get_parent() is Flame:
 		_is_player_in_range = false
 
 

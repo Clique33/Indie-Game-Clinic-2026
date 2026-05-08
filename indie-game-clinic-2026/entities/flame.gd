@@ -3,14 +3,22 @@ class_name Flame
 
 @export var speed : float = 100
 @export var shoot_left : bool = true
+@export var intensity : float = 1:
+	set(value):
+		intensity = value
+		if flame_light:
+			flame_light.energy = value
 
 
 var is_attached : bool = false
 var _was_shot : bool = false
 
 
-# Called when the node enters the scene tree for the first time.
+@onready var flame_light: PointLight2D = $FlameLight
+
+
 func _ready() -> void:
+	flame_light.energy = intensity
 	if get_parent() is Player:
 		is_attached = true
 

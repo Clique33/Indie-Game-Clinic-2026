@@ -11,15 +11,19 @@ script = ExtResource("2_lftts")
 
 [node name="Flame" parent="." unique_id=916405316 instance=ExtResource("2_sc02d")]
 position = Vector2(-12, -7)
+intensity = 0.0
 
 [node name="Flame2" parent="." unique_id=405842203 instance=ExtResource("2_sc02d")]
 position = Vector2(-6, -10)
+intensity = 0.0
 
 [node name="Flame3" parent="." unique_id=57461210 instance=ExtResource("2_sc02d")]
 position = Vector2(0, -14)
 
 [node name="Flame4" parent="." unique_id=195536945 instance=ExtResource("2_sc02d")]
 position = Vector2(6, -10)
+intensity = 0.0
 
 [node name="Flame5" parent="." unique_id=93088185 instance=ExtResource("2_sc02d")]
 position = Vector2(12, -7)
+intensity = 0.0

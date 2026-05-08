@@ -13,6 +13,8 @@ var _is_player_in_range : bool = false
 @onready var flame_sprite: AnimatedSprite2D = $FlameSprite
 @onready var point_light: PointLight2D = $FlameSprite/PointLight2D
 @onready var fully_dim_timer: Timer = $FullyDimTimer
+@onready var ignite_player: AudioStreamPlayer2D = $SoundEffects/IgnitePlayer
+@onready var buzzing_player: AudioStreamPlayer2D = $SoundEffects/BuzzingPlayer
 
 
 func _ready() -> void:
@@ -30,6 +32,8 @@ func turn_on(time: float = time_to_alternate) -> void:
 	var tween : Tween = create_tween()
 	tween.tween_property(point_light,"energy",turned_on_energy,time)
 	tween.parallel().tween_property(flame_sprite,"scale",Vector2.ONE,time)
+	ignite_player.play()
+	buzzing_player.play(2.5)
 	await tween.finished
 	_is_turned_on = true
 	_elapsed_time_since_turned_on = 0
@@ -40,6 +44,7 @@ func update_light_intensity() -> void:
 	var current_step : float = (fully_dim_timer.time_left/fully_dim_timer.wait_time)
 	point_light.energy = inverse_lerp(0.0,turned_on_energy,current_step)
 	flame_sprite.scale = Vector2.ONE * inverse_lerp(0.0,1,current_step)
+
 
 func turn_off(time: float = time_to_alternate) -> void:
 	if not _is_turned_on:
@@ -76,3 +81,4 @@ func _on_iluminable_area_area_exited(area: Area2D) -> void:
 
 func _on_fully_dim_timer_timeout() -> void:
 	_is_turned_on = false
+	buzzing_player.stop()

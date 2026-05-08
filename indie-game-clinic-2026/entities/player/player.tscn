@@ -3,8 +3,9 @@
 [ext_resource type="Script" uid="uid://3kdqoyoxpkxw" path="res://entities/player/player.gd" id="1_4flbx"]
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="2_fkugw"]
 [ext_resource type="Script" uid="uid://d1l8ik5esjjnn" path="res://systems/components/movement_component.gd" id="2_sglur"]
-[ext_resource type="Texture2D" uid="uid://7vt4ytna8rcc" path="res://assets/lamps_32x32.png" id="3_bls4j"]
-[ext_resource type="Texture2D" uid="uid://bupi4ajconhgj" path="res://assets/Pixel Flame Spritesheet.png" id="4_fkugw"]
+[ext_resource type="Texture2D" uid="uid://7vt4ytna8rcc" path="res://assets/art/lamps_32x32.png" id="3_bls4j"]
+[ext_resource type="Texture2D" uid="uid://bupi4ajconhgj" path="res://assets/art/Pixel Flame Spritesheet.png" id="4_fkugw"]
+[ext_resource type="AudioStream" uid="uid://ctug22h5rvyy4" path="res://assets/sfx/player_flame_flicker.mp3" id="6_8fjmc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bls4j"]
 atlas = ExtResource("4_fkugw")
@@ -51,13 +52,13 @@ radius = 3.1622777
 [node name="Player" type="CharacterBody2D" unique_id=1459404749]
 script = ExtResource("1_4flbx")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2106357000]
+[node name="FlameSprite" type="AnimatedSprite2D" parent="." unique_id=2106357000]
 texture_filter = 1
 position = Vector2(0, -14)
 sprite_frames = SubResource("SpriteFrames_wvtmh")
 autoplay = "default"
 
-[node name="FlameLight" type="PointLight2D" parent="AnimatedSprite2D" unique_id=1131560642]
+[node name="FlameLight" type="PointLight2D" parent="FlameSprite" unique_id=1131560642]
 position = Vector2(0, 3)
 color = Color(1, 0.6, 0, 1)
 texture = ExtResource("2_fkugw")
@@ -67,7 +68,7 @@ texture_scale = 0.5
 script = ExtResource("2_sglur")
 metadata/_custom_type_script = "uid://c0we6sfls40sy"
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1551763452]
+[node name="BaseSprite" type="Sprite2D" parent="." unique_id=1551763452]
 texture_filter = 1
 texture = ExtResource("3_bls4j")
 region_enabled = true
@@ -82,3 +83,11 @@ position = Vector2(0.5, -12)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanIluminateArea" unique_id=943804921]
 shape = SubResource("CircleShape2D_fkugw")
+
+[node name="SoundEffects" type="Node" parent="." unique_id=1393175392]
+
+[node name="FlickerPlayer" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=757533449]
+stream = ExtResource("6_8fjmc")
+volume_db = 8.0
+pitch_scale = 0.83
+autoplay = true

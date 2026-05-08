@@ -14,7 +14,7 @@ config/name="Indie Game Clinic 2026"
 run/main_scene="uid://dg6sve8kidkd3"
 config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
-config/icon="res://assets/icon.svg"
+config/icon="res://assets/art/icon.svg"
 
 [display]
 

@@ -1,9 +1,10 @@
 extends Sprite2D
 class_name Lamp
 
+
 @export var turned_on_energy : float = 1
-@export var time_to_alternate : float = 2
 @export var time_to_fully_dim : float = 5.0
+@export var time_to_alternate : float = 2
 
 
 var _elapsed_time_since_turned_on : float

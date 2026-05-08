@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b713vvya8x7ii" path="res://assets/art/icon.svg" id="1_7517i"]
 [ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="1_yggfj"]
 [ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="2_eig8f"]
+[ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/bonfire.tscn" id="4_ry45r"]
 
 [node name="Test" type="Node2D" unique_id=7882562]
 y_sort_enabled = true
@@ -23,3 +24,6 @@ position = Vector2(130, 65)
 
 [node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
 position = Vector2(240, 48)
+
+[node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
+position = Vector2(39, 159)

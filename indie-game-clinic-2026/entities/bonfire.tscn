@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://4f35o1224dyp"]
+
+[ext_resource type="Texture2D" uid="uid://bwosjwqt7pmbs" path="res://assets/art/bonfire.png" id="1_lt62l"]
+[ext_resource type="Script" uid="uid://bos5nicdffa18" path="res://entities/bonfire.gd" id="2_lftts"]
+[ext_resource type="PackedScene" uid="uid://bn8cattr3rwi" path="res://entities/flame.tscn" id="2_sc02d"]
+
+[node name="Bonfire" type="Sprite2D" unique_id=956425402]
+texture_filter = 1
+texture = ExtResource("1_lt62l")
+script = ExtResource("2_lftts")
+
+[node name="Flame" parent="." unique_id=916405316 instance=ExtResource("2_sc02d")]
+position = Vector2(-12, -7)
+
+[node name="Flame2" parent="." unique_id=405842203 instance=ExtResource("2_sc02d")]
+position = Vector2(-6, -10)
+
+[node name="Flame3" parent="." unique_id=57461210 instance=ExtResource("2_sc02d")]
+position = Vector2(0, -14)
+
+[node name="Flame4" parent="." unique_id=195536945 instance=ExtResource("2_sc02d")]
+position = Vector2(6, -10)
+
+[node name="Flame5" parent="." unique_id=93088185 instance=ExtResource("2_sc02d")]
+position = Vector2(12, -7)

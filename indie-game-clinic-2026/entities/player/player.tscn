@@ -15,12 +15,18 @@ radius = 7.0
 [node name="Player" type="CharacterBody2D" unique_id=1459404749]
 script = ExtResource("1_4flbx")
 
-[node name="FlameSprite" parent="." unique_id=725808941 instance=ExtResource("2_bls4j")]
-position = Vector2(-0.5, -26.5)
-
 [node name="MovementComponent" type="Node" parent="." unique_id=641170963]
 script = ExtResource("2_sglur")
 metadata/_custom_type_script = "uid://c0we6sfls40sy"
+
+[node name="FlameSpawnerComponent" type="Node" parent="." unique_id=1271094531 node_paths=PackedStringArray("parent_node", "spawn_at_position")]
+script = ExtResource("5_fkugw")
+parent_node = NodePath("..")
+spawn_at_position = NodePath("../FlameSpawnMarker")
+metadata/_custom_type_script = "uid://c0we6sfls40sy"
+
+[node name="FlameSpawnMarker" type="Marker2D" parent="." unique_id=388581570]
+position = Vector2(-0.5, -26.5)
 
 [node name="BaseSprite" type="Sprite2D" parent="." unique_id=1551763452]
 texture_filter = 1
@@ -28,6 +34,9 @@ position = Vector2(-0.5, -13)
 texture = ExtResource("3_bls4j")
 region_enabled = true
 region_rect = Rect2(32, 0, 32, 32)
+
+[node name="FlameSprite" parent="." unique_id=725808941 instance=ExtResource("2_bls4j")]
+position = Vector2(-0.5, -26.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690655228]
 visible = false
@@ -40,16 +49,8 @@ position = Vector2(0, -25)
 visible = false
 shape = SubResource("CircleShape2D_bls4j")
 
-[node name="FlameSpawnerComponent" type="Node" parent="." unique_id=1271094531 node_paths=PackedStringArray("parent_node", "spawn_at_position")]
-script = ExtResource("5_fkugw")
-parent_node = NodePath("..")
-spawn_at_position = NodePath("../FlameSpawnMarker")
-metadata/_custom_type_script = "uid://c0we6sfls40sy"
-
-[node name="FlameSpawnMarker" type="Marker2D" parent="." unique_id=388581570]
-position = Vector2(-0.5, -26.5)
-
 [node name="Debug" type="Control" parent="." unique_id=951601906]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = -44.0

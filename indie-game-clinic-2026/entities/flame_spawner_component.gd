@@ -14,5 +14,5 @@ func spawn_flame() -> Flame:
 		return null
 	var new_flame : Flame = flame_scene.instantiate()
 	parent_node.call_deferred("add_child",new_flame)
-	new_flame.set_deferred("global_position",spawn_at_position.global_position)
+	new_flame.set_deferred("position",spawn_at_position.position)
 	return new_flame

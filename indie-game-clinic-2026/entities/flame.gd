@@ -5,12 +5,14 @@ class_name Flame
 @export var shoot_left : bool = true
 
 
+var is_attached : bool = false
 var _was_shot : bool = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	if get_parent() is Player:
+		is_attached = true
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -29,3 +31,4 @@ func shoot() -> void:
 		return
 	_was_shot = true
 	call_deferred("reparent",get_tree().root)
+	set_deferred("is_attached",false)

@@ -68,10 +68,12 @@ texture = ExtResource("2_x0l46")
 texture_scale = 0.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1067913906]
+visible = false
 shape = SubResource("CircleShape2D_x0l46")
 disabled = true
 
 [node name="CanIluminateArea" type="Area2D" parent="." unique_id=1533012712]
+visible = false
 position = Vector2(0, 2)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanIluminateArea" unique_id=460212075]

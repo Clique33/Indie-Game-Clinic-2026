@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bn8cattr3rwi" path="res://entities/flame.tscn" id="2_sc02d"]
 
 [node name="Bonfire" type="Sprite2D" unique_id=956425402]
+self_modulate = Color(0.737193, 0.7371929, 0.73719305, 1)
 texture_filter = 1
 texture = ExtResource("1_lt62l")
 script = ExtResource("2_lftts")
@@ -20,6 +21,9 @@ intensity = 0.0
 [node name="Flame3" parent="." unique_id=57461210 instance=ExtResource("2_sc02d")]
 position = Vector2(0, -14)
 
+[node name="FlameLight" parent="Flame3" index="2" unique_id=2101949261]
+texture_scale = 1.0
+
 [node name="Flame4" parent="." unique_id=195536945 instance=ExtResource("2_sc02d")]
 position = Vector2(6, -10)
 intensity = 0.0
@@ -27,3 +31,5 @@ intensity = 0.0
 [node name="Flame5" parent="." unique_id=93088185 instance=ExtResource("2_sc02d")]
 position = Vector2(12, -7)
 intensity = 0.0
+
+[editable path="Flame3"]

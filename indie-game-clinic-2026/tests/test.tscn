@@ -9,7 +9,11 @@
 [node name="Test" type="Node2D" unique_id=7882562]
 y_sort_enabled = true
 
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
+energy = 0.1
+
 [node name="Icon" type="Sprite2D" parent="." unique_id=1753961931]
+modulate = Color(0.12591091, 0.12591082, 0.12591082, 1)
 texture_filter = 1
 position = Vector2(-36, -31.999998)
 scale = Vector2(3.0546875, 1.9453125)
@@ -17,15 +21,23 @@ texture = ExtResource("1_7517i")
 centered = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
-color = Color(0, 0, 0, 1)
+visible = false
+color = Color(0.029506557, 0.029506557, 0.029506557, 1)
 
 [node name="Player" parent="." unique_id=1459404749 instance=ExtResource("1_yggfj")]
-position = Vector2(94, 175)
+position = Vector2(277, 192)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
+zoom = Vector2(3, 3)
 
 [node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
-position = Vector2(240, 48)
+position = Vector2(230, 91)
+
+[node name="Lamp2" parent="." unique_id=1076608020 instance=ExtResource("2_eig8f")]
+position = Vector2(49, 75)
+
+[node name="Lamp3" parent="." unique_id=1767103788 instance=ExtResource("2_eig8f")]
+position = Vector2(109, 75)
 
 [node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
 position = Vector2(56, 161)

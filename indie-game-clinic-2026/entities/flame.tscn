@@ -65,6 +65,8 @@ autoplay = true
 position = Vector2(0, 3)
 color = Color(1, 0.6, 0, 1)
 shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 5.0
 texture = ExtResource("2_x0l46")
 texture_scale = 0.5
 

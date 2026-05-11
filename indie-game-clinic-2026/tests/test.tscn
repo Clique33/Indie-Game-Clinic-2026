@@ -15,8 +15,8 @@ energy = 0.1
 [node name="Icon" type="Sprite2D" parent="." unique_id=1753961931]
 modulate = Color(0.12591091, 0.12591082, 0.12591082, 1)
 texture_filter = 1
-position = Vector2(-36, -31.999998)
-scale = Vector2(3.0546875, 1.9453125)
+position = Vector2(-989, -796)
+scale = Vector2(21.085936, 13.398437)
 texture = ExtResource("1_7517i")
 centered = false
 
@@ -25,22 +25,22 @@ visible = false
 color = Color(0.029506557, 0.029506557, 0.029506557, 1)
 
 [node name="Player" parent="." unique_id=1459404749 instance=ExtResource("1_yggfj")]
-position = Vector2(277, 192)
+position = Vector2(482.77686, 282.9091)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
 
 [node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
-position = Vector2(230, 91)
+position = Vector2(200.95868, 150)
 
 [node name="Lamp2" parent="." unique_id=1076608020 instance=ExtResource("2_eig8f")]
-position = Vector2(49, 75)
+position = Vector2(49, 150)
 
 [node name="Lamp3" parent="." unique_id=1767103788 instance=ExtResource("2_eig8f")]
-position = Vector2(109, 75)
+position = Vector2(113, 150)
 
 [node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
-position = Vector2(56, 161)
+position = Vector2(86, 317)
 
 [node name="Level" parent="." unique_id=486952134 instance=ExtResource("5_dsb46")]
 position = Vector2(1, 18)

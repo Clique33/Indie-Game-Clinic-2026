@@ -27,9 +27,14 @@ window/stretch/mode="canvas_items"
 movie_writer/video_quality=1.0
 movie_writer/movie_file="C:/Users/gabri/OneDrive/Desktop/flame lighting.avi"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/imjp94.yafsm/plugin.cfg")
+
 [file_customization]
 
 folder_colors={
+"res://addons/": "gray",
 "res://assets/": "purple",
 "res://entities/": "red",
 "res://levels/": "orange",

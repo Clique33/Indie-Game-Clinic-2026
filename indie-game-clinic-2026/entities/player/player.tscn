@@ -1,12 +1,16 @@
 [gd_scene format=3 uid="uid://bmebh8syonlju"]
 
 [ext_resource type="Script" uid="uid://3kdqoyoxpkxw" path="res://entities/player/player.gd" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://d1l8ik5esjjnn" path="res://systems/components/movement_component.gd" id="2_sglur"]
+[ext_resource type="PackedScene" uid="uid://cwcjmyhf5cm3f" path="res://systems/components/movement/movement_component.tscn" id="2_qiwj3"]
 [ext_resource type="Texture2D" uid="uid://bmy1gsdo3w68s" path="res://assets/art/player/idle.png" id="4_fkugw"]
 [ext_resource type="Texture2D" uid="uid://dn8ot1ewfygaj" path="res://assets/art/player/jump.png" id="5_8fjmc"]
 [ext_resource type="Script" uid="uid://bjsterle5l8t6" path="res://systems/components/flame_spawner_component.gd" id="5_fkugw"]
 [ext_resource type="Texture2D" uid="uid://oxedx27kcpf3" path="res://assets/art/player/land.png" id="6_8fjmc"]
 [ext_resource type="Texture2D" uid="uid://d1cjpbri6yop3" path="res://assets/art/player/walk.png" id="7_qiwj3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eyb6c"]
+atlas = ExtResource("6_8fjmc")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8fjmc"]
 atlas = ExtResource("4_fkugw")
@@ -64,14 +68,6 @@ region = Rect2(64, 0, 64, 64)
 atlas = ExtResource("5_8fjmc")
 region = Rect2(128, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_eyb6c"]
-atlas = ExtResource("6_8fjmc")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_221hk"]
-atlas = ExtResource("6_8fjmc")
-region = Rect2(64, 0, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2kln"]
 atlas = ExtResource("7_qiwj3")
 region = Rect2(0, 0, 64, 64)
@@ -114,6 +110,14 @@ region = Rect2(576, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_b2kln"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eyb6c")
+}],
+"loop": false,
+"name": &"fall",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_8fjmc")
@@ -168,17 +172,6 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_eyb6c")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_221hk")
-}],
-"loop": false,
-"name": &"land",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
 "texture": SubResource("AtlasTexture_b2kln")
 }, {
 "duration": 1.0,
@@ -210,7 +203,7 @@ animations = [{
 }],
 "loop": true,
 "name": &"walk",
-"speed": 5.0
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
@@ -219,12 +212,13 @@ size = Vector2(55, 29)
 [sub_resource type="CircleShape2D" id="CircleShape2D_bls4j"]
 radius = 20.024984
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qiwj3"]
+polygon = PackedVector2Array(-27, -26, 26, -26, 26, -24, -27, -24)
+
 [node name="Player" type="CharacterBody2D" unique_id=1459404749]
 script = ExtResource("1_4flbx")
 
-[node name="MovementComponent" type="Node" parent="." unique_id=641170963]
-script = ExtResource("2_sglur")
-metadata/_custom_type_script = "uid://c0we6sfls40sy"
+[node name="MovementComponent" parent="." unique_id=1526532134 instance=ExtResource("2_qiwj3")]
 
 [node name="FlameSpawnerComponent" type="Node" parent="." unique_id=1271094531 node_paths=PackedStringArray("parent_node", "spawn_at_position")]
 script = ExtResource("5_fkugw")
@@ -239,7 +233,7 @@ position = Vector2(-0.5, -54.5)
 texture_filter = 1
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_b2kln")
-animation = &"walk"
+animation = &"fall"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690655228]
@@ -290,10 +284,10 @@ text = "light sources: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=777966038]
+occluder = SubResource("OccluderPolygon2D_qiwj3")
+
 [connection signal="changed_facing" from="MovementComponent" to="." method="_on_movement_component_changed_facing"]
-[connection signal="jumped" from="MovementComponent" to="." method="_on_jumped"]
-[connection signal="landed" from="MovementComponent" to="." method="_on_landed"]
-[connection signal="started_walking" from="MovementComponent" to="." method="_on_started_walking"]
-[connection signal="stopped_walking" from="MovementComponent" to="." method="_on_stopped_walking"]
+[connection signal="changed_state" from="MovementComponent" to="." method="_on_movement_component_changed_state"]
 [connection signal="area_entered" from="CanBeIluminatedArea" to="." method="_on_can_be_iluminated_area_area_entered"]
 [connection signal="area_exited" from="CanBeIluminatedArea" to="." method="_on_can_be_iluminated_area_area_exited"]

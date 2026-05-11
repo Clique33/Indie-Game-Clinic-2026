@@ -113,3 +113,15 @@ func _on_started_walking() -> void:
 func _on_stopped_walking() -> void:
 	if base_sprite.animation == "walk":
 		base_sprite.stop()
+
+
+func _on_movement_component_changed_state(name: MovementComponent.PossibleStates) -> void:
+	match name:
+		MovementComponent.PossibleStates.IDLE:
+			base_sprite.play("idle")
+		MovementComponent.PossibleStates.WALKING:
+			base_sprite.play("walk")
+		MovementComponent.PossibleStates.GOING_UP:
+			base_sprite.play("jump")
+		MovementComponent.PossibleStates.GOING_DOWN:
+			base_sprite.play("fall")

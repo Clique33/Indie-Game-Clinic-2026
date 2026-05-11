@@ -2,11 +2,11 @@ extends Component
 class_name MovementComponent
 
 
+enum PossibleStates {IDLE, WALKING, GOING_DOWN, GOING_UP}
+
+
 signal changed_facing(left : bool)
-signal jumped
-signal landed
-signal started_walking
-signal stopped_walking
+signal changed_state(name : PossibleStates)
 
 
 @export var speed : float = 100.0
@@ -19,13 +19,17 @@ var _is_walking : bool = false
 
 
 @onready var entity : CharacterBody2D = parent as CharacterBody2D 
+@onready var state_machine_player: StateMachinePlayer = $StateMachinePlayer
 
 
 func _physics_process(delta: float) -> void:
 	handle_gravity(delta)
 	handle_jump()
 	handle_walk()
-	print(_on_air)
+	state_machine_player.set_param("on_air",_on_air)
+	state_machine_player.set_param("direction_x",entity.velocity.x)
+	state_machine_player.set_param("direction_y",entity.velocity.y)
+	
 	entity.move_and_slide()
 
 
@@ -34,11 +38,9 @@ func handle_walk() -> void:
 	if not direction:
 		entity.velocity.x = move_toward(entity.velocity.x, 0, speed)
 		_is_walking = false
-		stopped_walking.emit()
 	else:
 		if not (_is_walking or _on_air):
 			_is_walking = true
-			started_walking.emit()
 		
 		if direction < 0 and not _is_facing_left:
 			_is_facing_left = not _is_facing_left
@@ -49,20 +51,21 @@ func handle_walk() -> void:
 		entity.velocity.x = direction * speed
 
 
+func is_idle() -> bool:
+	return not entity.velocity
+
+
 func handle_jump() -> void:
 	if Input.is_action_just_pressed("jump") and entity.is_on_floor():
 		entity.velocity.y = jump_velocity
+		_on_air = true
 
 
 func handle_gravity(delta : float) -> void:
-	if _on_air and entity.is_on_floor():
+	if entity.is_on_floor():
 		_on_air = false
-		landed.emit()
-	if not _on_air and not entity.is_on_floor():
+	else:
 		_on_air = true
-		jumped.emit()
-		
-	if not entity.is_on_floor():
 		if entity.velocity.y > 0:
 			delta *= 2
 		entity.velocity += entity.get_gravity() * delta
@@ -70,3 +73,17 @@ func handle_gravity(delta : float) -> void:
 
 func get_is_facing_left() -> bool:
 	return _is_facing_left
+
+func _on_state_machine_player_transited(from: Variant, to: Variant) -> void:
+	var state : PossibleStates
+	match to:
+		"Idle":
+			state = PossibleStates.IDLE
+		"Walking":
+			state = PossibleStates.WALKING
+		"GoingDown":
+			state = PossibleStates.GOING_DOWN
+		"GoingUp":
+			state = PossibleStates.GOING_UP
+			
+	changed_state.emit(state)

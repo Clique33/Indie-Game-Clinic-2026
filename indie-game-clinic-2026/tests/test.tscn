@@ -1,46 +1,41 @@
 [gd_scene format=3 uid="uid://dg6sve8kidkd3"]
 
-[ext_resource type="Texture2D" uid="uid://b713vvya8x7ii" path="res://assets/art/icon.svg" id="1_7517i"]
 [ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="1_yggfj"]
 [ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="2_eig8f"]
 [ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/bonfire.tscn" id="4_ry45r"]
 [ext_resource type="PackedScene" uid="uid://bpv38cudtipdr" path="res://levels/level.tscn" id="5_dsb46"]
 
 [node name="Test" type="Node2D" unique_id=7882562]
-y_sort_enabled = true
+
+[node name="Level" parent="." unique_id=486952134 instance=ExtResource("5_dsb46")]
+position = Vector2(-7, 116)
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
+visible = false
 energy = 0.1
 
-[node name="Icon" type="Sprite2D" parent="." unique_id=1753961931]
-modulate = Color(0.12591091, 0.12591082, 0.12591082, 1)
-texture_filter = 1
-position = Vector2(-989, -796)
-scale = Vector2(21.085936, 13.398437)
-texture = ExtResource("1_7517i")
-centered = false
-
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
-visible = false
-color = Color(0.029506557, 0.029506557, 0.029506557, 1)
+color = Color(0, 0, 0, 1)
 
 [node name="Player" parent="." unique_id=1459404749 instance=ExtResource("1_yggfj")]
-position = Vector2(482.77686, 282.9091)
+position = Vector2(48.802, 625.529)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
 zoom = Vector2(2, 2)
+limit_left = -250
+limit_right = 1200
+limit_bottom = 1000
+drag_horizontal_enabled = true
+drag_horizontal_offset = 0.1
 
 [node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
-position = Vector2(200.95868, 150)
+position = Vector2(266.14597, 575.326)
 
 [node name="Lamp2" parent="." unique_id=1076608020 instance=ExtResource("2_eig8f")]
-position = Vector2(49, 150)
+position = Vector2(732.5095, 311.68964)
 
 [node name="Lamp3" parent="." unique_id=1767103788 instance=ExtResource("2_eig8f")]
-position = Vector2(113, 150)
+position = Vector2(387.96414, 197.14418)
 
 [node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
-position = Vector2(86, 317)
-
-[node name="Level" parent="." unique_id=486952134 instance=ExtResource("5_dsb46")]
-position = Vector2(1, 18)
+position = Vector2(-9.097015, 124.31)

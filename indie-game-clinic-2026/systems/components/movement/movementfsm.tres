@@ -11,52 +11,59 @@ script = ExtResource("2_l7gdk")
 name = "Entry"
 metadata/graph_offset = Vector2(421, 1082.5)
 
-[sub_resource type="Resource" id="Resource_ktyj3"]
-script = ExtResource("2_l7gdk")
-name = "Idle"
-metadata/graph_offset = Vector2(561, 1082.5)
-
-[sub_resource type="Resource" id="Resource_so0bs"]
-script = ExtResource("2_l7gdk")
-name = "Walking"
-metadata/graph_offset = Vector2(841, 1082.5)
-
 [sub_resource type="Resource" id="Resource_atmlc"]
 script = ExtResource("2_l7gdk")
 name = "GoingDown"
 metadata/graph_offset = Vector2(549.5, 822.5)
-
-[sub_resource type="Resource" id="Resource_y4hcs"]
-script = ExtResource("2_l7gdk")
-name = "OnAir"
-metadata/graph_offset = Vector2(701, 942.5)
 
 [sub_resource type="Resource" id="Resource_d04rg"]
 script = ExtResource("2_l7gdk")
 name = "GoingUp"
 metadata/graph_offset = Vector2(838.5, 822.5)
 
+[sub_resource type="Resource" id="Resource_ktyj3"]
+script = ExtResource("2_l7gdk")
+name = "Idle"
+metadata/graph_offset = Vector2(561, 1082.5)
+
+[sub_resource type="Resource" id="Resource_y4hcs"]
+script = ExtResource("2_l7gdk")
+name = "OnAir"
+metadata/graph_offset = Vector2(701, 942.5)
+
+[sub_resource type="Resource" id="Resource_so0bs"]
+script = ExtResource("2_l7gdk")
+name = "Walking"
+metadata/graph_offset = Vector2(841, 1082.5)
+
 [sub_resource type="Resource" id="Resource_bj0gh"]
 script = ExtResource("3_iqrpg")
 from = "Entry"
 to = "Idle"
 
-[sub_resource type="Resource" id="Resource_3b3hp"]
-script = ExtResource("4_iqrpg")
-name = "on_air"
-
-[sub_resource type="Resource" id="Resource_qe2vn"]
+[sub_resource type="Resource" id="Resource_xbgi2"]
 script = ExtResource("6_ktyj3")
-comparation = 1
-name = "direction_x"
+name = "direction_y"
 
-[sub_resource type="Resource" id="Resource_3sw36"]
+[sub_resource type="Resource" id="Resource_jc3e3"]
 script = ExtResource("3_iqrpg")
-from = "Idle"
-to = "Walking"
+from = "GoingDown"
+to = "Idle"
 conditions = {
-"direction_x": SubResource("Resource_qe2vn"),
-"on_air": SubResource("Resource_3b3hp")
+"direction_y": SubResource("Resource_xbgi2")
+}
+
+[sub_resource type="Resource" id="Resource_cs1dn"]
+script = ExtResource("6_ktyj3")
+comparation = 4
+name = "direction_y"
+
+[sub_resource type="Resource" id="Resource_6onf6"]
+script = ExtResource("3_iqrpg")
+from = "GoingUp"
+to = "GoingDown"
+conditions = {
+"direction_y": SubResource("Resource_cs1dn")
 }
 
 [sub_resource type="Resource" id="Resource_iqrpg"]
@@ -72,29 +79,22 @@ conditions = {
 "on_air": SubResource("Resource_iqrpg")
 }
 
-[sub_resource type="Resource" id="Resource_qrhqo"]
+[sub_resource type="Resource" id="Resource_qe2vn"]
 script = ExtResource("6_ktyj3")
+comparation = 1
 name = "direction_x"
 
-[sub_resource type="Resource" id="Resource_amj0h"]
-script = ExtResource("3_iqrpg")
-from = "Walking"
-to = "Idle"
-conditions = {
-"direction_x": SubResource("Resource_qrhqo")
-}
-
-[sub_resource type="Resource" id="Resource_2nxwj"]
+[sub_resource type="Resource" id="Resource_3b3hp"]
 script = ExtResource("4_iqrpg")
-value = true
 name = "on_air"
 
-[sub_resource type="Resource" id="Resource_248bm"]
+[sub_resource type="Resource" id="Resource_3sw36"]
 script = ExtResource("3_iqrpg")
-from = "Walking"
-to = "OnAir"
+from = "Idle"
+to = "Walking"
 conditions = {
-"on_air": SubResource("Resource_2nxwj")
+"direction_x": SubResource("Resource_qe2vn"),
+"on_air": SubResource("Resource_3b3hp")
 }
 
 [sub_resource type="Resource" id="Resource_astup"]
@@ -123,29 +123,29 @@ conditions = {
 "direction_y": SubResource("Resource_gudu8")
 }
 
-[sub_resource type="Resource" id="Resource_cs1dn"]
+[sub_resource type="Resource" id="Resource_qrhqo"]
 script = ExtResource("6_ktyj3")
-comparation = 4
-name = "direction_y"
+name = "direction_x"
 
-[sub_resource type="Resource" id="Resource_6onf6"]
+[sub_resource type="Resource" id="Resource_amj0h"]
 script = ExtResource("3_iqrpg")
-from = "GoingUp"
-to = "GoingDown"
-conditions = {
-"direction_y": SubResource("Resource_cs1dn")
-}
-
-[sub_resource type="Resource" id="Resource_xbgi2"]
-script = ExtResource("6_ktyj3")
-name = "direction_y"
-
-[sub_resource type="Resource" id="Resource_jc3e3"]
-script = ExtResource("3_iqrpg")
-from = "GoingDown"
+from = "Walking"
 to = "Idle"
 conditions = {
-"direction_y": SubResource("Resource_xbgi2")
+"direction_x": SubResource("Resource_qrhqo")
+}
+
+[sub_resource type="Resource" id="Resource_2nxwj"]
+script = ExtResource("4_iqrpg")
+value = true
+name = "on_air"
+
+[sub_resource type="Resource" id="Resource_248bm"]
+script = ExtResource("3_iqrpg")
+from = "Walking"
+to = "OnAir"
+conditions = {
+"on_air": SubResource("Resource_2nxwj")
 }
 
 [resource]

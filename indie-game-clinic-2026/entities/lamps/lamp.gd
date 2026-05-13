@@ -4,7 +4,7 @@ class_name Lamp
 
 @export var turned_on_energy : float = 1
 @export var time_to_fully_dim : float = 5.0
-@export var time_to_alternate : float = 2
+@export var time_to_alternate : float = .2
 
 
 var _elapsed_time_since_turned_on : float
@@ -23,15 +23,18 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	update_light_intensity()
+	#update_light_intensity()
+	pass
 
 func turn_on(time: float = time_to_alternate) -> void:
-	var tween : Tween = create_tween()
-	tween.tween_property(point_light,"energy",turned_on_energy,time)
-	tween.parallel().tween_property(flame_sprite,"scale",Vector2.ONE,time)
 	ignite_player.play()
 	buzzing_player.play(2.5)
-	await tween.finished
+	'''var tween : Tween = create_tween()
+	tween.tween_property(point_light,"energy",turned_on_energy,time)
+	tween.parallel().tween_property(flame_sprite,"scale",Vector2.ONE,time)
+	await tween.finished'''
+	point_light.energy = turned_on_energy
+	flame_sprite.scale = Vector2.ONE
 	is_turned_on = true
 	_elapsed_time_since_turned_on = 0
 	fully_dim_timer.start()
@@ -63,14 +66,13 @@ func alternate(time : float = time_to_alternate) -> void:
 func _on_iluminable_area_area_entered(area: Area2D) -> void:
 	if not area.get_parent():
 		return
+	print('candd iluminate')
 	
 	if area.get_parent() is Flame and not (area.get_parent() as Flame).is_attached:
 		turn_on()
 	
-	if area.get_parent() is Player:
+	if area.get_parent() is Player and (area.get_parent() as Player).can_ignite:
 		_is_player_in_range = true
-		if not (area.get_parent() as Player).flame_sprite:
-			(area.get_parent() as Player)._can_ignite = true
 
 
 func _on_iluminable_area_area_exited(area: Area2D) -> void:

@@ -7,6 +7,9 @@
 [ext_resource type="Script" uid="uid://bjsterle5l8t6" path="res://systems/components/flame_spawner_component.gd" id="5_fkugw"]
 [ext_resource type="Texture2D" uid="uid://oxedx27kcpf3" path="res://assets/art/player/land.png" id="6_8fjmc"]
 [ext_resource type="Texture2D" uid="uid://d1cjpbri6yop3" path="res://assets/art/player/walk.png" id="7_qiwj3"]
+[ext_resource type="AudioStream" uid="uid://d248ns60a2hvr" path="res://assets/sfx/gabriel/steps.wav" id="8_26q78"]
+[ext_resource type="AudioStream" uid="uid://cu01gjucxuj3g" path="res://assets/sfx/gabriel/jump.wav" id="9_bectd"]
+[ext_resource type="AudioStream" uid="uid://bdb84q7sy1lng" path="res://assets/sfx/gabriel/land.wav" id="10_wvtmh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eyb6c"]
 atlas = ExtResource("6_8fjmc")
@@ -223,17 +226,17 @@ script = ExtResource("1_4flbx")
 [node name="FlameSpawnerComponent" type="Node" parent="." unique_id=1271094531 node_paths=PackedStringArray("parent_node", "spawn_at_position")]
 script = ExtResource("5_fkugw")
 parent_node = NodePath("..")
-spawn_at_position = NodePath("../FlameSpawnMarker")
+spawn_at_position = NodePath("FlameSpawnMarker")
 metadata/_custom_type_script = "uid://c0we6sfls40sy"
 
-[node name="FlameSpawnMarker" type="Marker2D" parent="." unique_id=388581570]
+[node name="FlameSpawnMarker" type="Marker2D" parent="FlameSpawnerComponent" unique_id=388581570]
 position = Vector2(-0.5, -54.5)
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=133153141]
 texture_filter = 1
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_b2kln")
-animation = &"fall"
+animation = &"walk"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690655228]
@@ -244,7 +247,6 @@ shape = SubResource("RectangleShape2D_fkugw")
 position = Vector2(0, -25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanBeIluminatedArea" unique_id=336438564]
-visible = false
 position = Vector2(-1, -28)
 shape = SubResource("CircleShape2D_bls4j")
 
@@ -252,8 +254,8 @@ shape = SubResource("CircleShape2D_bls4j")
 visible = false
 layout_mode = 3
 anchors_preset = 0
-offset_top = -44.0
-offset_bottom = -44.0
+offset_top = -77.0
+offset_bottom = -77.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Debug" unique_id=619858166]
 layout_mode = 1
@@ -272,22 +274,40 @@ alignment = 1
 
 [node name="CanIgniteLabel" type="Label" parent="Debug/VBoxContainer" unique_id=1502469763]
 layout_mode = 2
-theme_override_font_sizes/font_size = 4
+theme_override_font_sizes/font_size = 14
 text = "can ignite? "
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="IsLightSourceInRangeLabel" type="Label" parent="Debug/VBoxContainer" unique_id=1442418101]
 layout_mode = 2
-theme_override_font_sizes/font_size = 4
+theme_override_font_sizes/font_size = 14
 text = "light sources: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="." unique_id=777966038]
+visible = false
 occluder = SubResource("OccluderPolygon2D_qiwj3")
+
+[node name="SfxPlayers" type="Node2D" parent="." unique_id=1419997019]
+
+[node name="FootstepsPlayer" type="AudioStreamPlayer2D" parent="SfxPlayers" unique_id=428375398]
+stream = ExtResource("8_26q78")
+pitch_scale = 0.8
+
+[node name="JumpPlayer" type="AudioStreamPlayer2D" parent="SfxPlayers" unique_id=2109210640]
+stream = ExtResource("9_bectd")
+volume_db = 5.0
+
+[node name="LandPlayer" type="AudioStreamPlayer2D" parent="SfxPlayers" unique_id=276985743]
+stream = ExtResource("10_wvtmh")
+volume_db = 10.0
+pitch_scale = 0.5
 
 [connection signal="changed_facing" from="MovementComponent" to="." method="_on_movement_component_changed_facing"]
 [connection signal="changed_state" from="MovementComponent" to="." method="_on_movement_component_changed_state"]
+[connection signal="landed" from="MovementComponent" to="." method="_on_landed"]
+[connection signal="frame_changed" from="BaseSprite" to="." method="_on_base_sprite_frame_changed"]
 [connection signal="area_entered" from="CanBeIluminatedArea" to="." method="_on_can_be_iluminated_area_area_entered"]
 [connection signal="area_exited" from="CanBeIluminatedArea" to="." method="_on_can_be_iluminated_area_area_exited"]

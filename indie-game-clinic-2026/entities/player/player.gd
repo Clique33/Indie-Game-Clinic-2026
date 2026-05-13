@@ -6,16 +6,16 @@ var flame_sprite: Flame:
 	set(value):
 		flame_sprite = value
 		if not value:
-			_can_ignite = true
+			can_ignite = true
 		else:
-			_can_ignite = false
+			can_ignite = false
 
 
-var _can_ignite : bool = false:
+var can_ignite : bool = false:
 	set(value):
-		_can_ignite = value
+		can_ignite = value
 		if can_ignite_label:
-			can_ignite_label.text = "can ignite? "+str(_can_ignite)
+			can_ignite_label.text = "can ignite? "+str(can_ignite)
 
 
 var light_sources_in_range : Array[Lamp] = []
@@ -26,18 +26,19 @@ var light_sources_in_range : Array[Lamp] = []
 @onready var flame_spawner_component: FlameSpawnerComponent = $FlameSpawnerComponent
 @onready var can_ignite_label: Label = $Debug/VBoxContainer/CanIgniteLabel
 @onready var is_light_source_in_range_label: Label = $Debug/VBoxContainer/IsLightSourceInRangeLabel
+@onready var footsteps_player: AudioStreamPlayer2D = $SfxPlayers/FootstepsPlayer
+@onready var jump_player: AudioStreamPlayer2D = $SfxPlayers/JumpPlayer
+@onready var land_player: AudioStreamPlayer2D = $SfxPlayers/LandPlayer
 
 
 func _ready() -> void:
 	if has_node("FlameSprite"):
 		flame_sprite = get_node("FlameSprite")
 	else:
-		flame_sprite = flame_spawner_component.spawn_flame()
+		flame_sprite = flame_spawner_component.spawn_flame(Color.WHITE)
 
 
-func _physics_process(delta: float) -> void:
-	if Input.is_action_just_pressed("enter"):
-		get_tree().reload_current_scene()
+func _physics_process(_delta: float) -> void:
 	handle_light_lamps()
 	handle_shoot_flame()
 	handle_spawn_flame()
@@ -47,7 +48,7 @@ func handle_light_lamps() -> void:
 	if light_sources_in_range.is_empty():
 		return
 	
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_released("enter"):
 		for lamp in light_sources_in_range:
 			lamp.turn_on()
 
@@ -60,17 +61,17 @@ func handle_shoot_flame() -> void:
 		flame_sprite.shoot_left = movement_component.get_is_facing_left()
 		flame_sprite.shoot()
 		flame_sprite = null
-		_can_ignite = true
+		can_ignite = true
 
 
 func handle_spawn_flame() -> void:
-	if not _can_ignite or light_sources_in_range.is_empty():
+	if not can_ignite or light_sources_in_range.is_empty():
 		return
-	if Input.is_action_just_released("ui_accept"):
+	if Input.is_action_just_released("enter"):
 		if not are_there_any_light_sources_lit():
 			return
 		flame_sprite = flame_spawner_component.spawn_flame()
-		_can_ignite = false
+		can_ignite = false
 
 
 func are_there_any_light_sources_lit() -> bool:
@@ -98,30 +99,26 @@ func _on_movement_component_changed_facing(left: bool) -> void:
 		base_sprite.flip_h = false
 
 
-func _on_jumped() -> void:
-	base_sprite.play("jump")
-
-
 func _on_landed() -> void:
-	base_sprite.play("land")
+	land_player.play(0.08)
 
 
-func _on_started_walking() -> void:
-	base_sprite.play("walk")
-
-
-func _on_stopped_walking() -> void:
-	if base_sprite.animation == "walk":
-		base_sprite.stop()
-
-
-func _on_movement_component_changed_state(name: MovementComponent.PossibleStates) -> void:
-	match name:
+func _on_movement_component_changed_state(_name: MovementComponent.PossibleStates) -> void:
+	match _name:
 		MovementComponent.PossibleStates.IDLE:
 			base_sprite.play("idle")
 		MovementComponent.PossibleStates.WALKING:
 			base_sprite.play("walk")
 		MovementComponent.PossibleStates.GOING_UP:
 			base_sprite.play("jump")
+			jump_player.play(0.3)
 		MovementComponent.PossibleStates.GOING_DOWN:
 			base_sprite.play("fall")
+
+
+func _on_base_sprite_frame_changed() -> void:
+	match base_sprite.animation:
+		"walk":
+			match base_sprite.frame:
+				2,7:
+					footsteps_player.play()

@@ -57,17 +57,17 @@ autoplay = "default"
 
 [node name="FlickerPlayer" type="AudioStreamPlayer2D" parent="." unique_id=967911575]
 stream = ExtResource("3_5vhgi")
-volume_db = 8.0
 pitch_scale = 0.83
 autoplay = true
 
 [node name="FlameLight" type="PointLight2D" parent="." unique_id=2101949261]
 position = Vector2(0, 3)
-color = Color(1, 0.856, 0.64, 1)
+color = Color(1, 0.85490197, 0.6392157, 1)
 shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = ExtResource("2_x0l46")
+texture_scale = 1.5
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1067913906]
 shape = SubResource("CircleShape2D_x0l46")

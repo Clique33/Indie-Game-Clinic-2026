@@ -13,6 +13,11 @@ class_name Flame
 		light_radius_scale = value
 		if flame_light:
 			flame_light.texture_scale = value
+@export var color : Color = Color.hex(0xffdaa3):
+	set(value):
+		color = value
+		if flame_light:
+			flame_light.color = value
 
 
 var is_attached : bool = false
@@ -32,7 +37,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if not _was_shot:
 		return
 	if get_last_slide_collision():
@@ -61,5 +66,5 @@ func shoot() -> void:
 	visible = true
 	collision_shape.disabled = false
 	flame_sprite.visible = true
-	call_deferred("reparent",get_tree().root)
 	set_deferred("is_attached",false)
+	call_deferred("reparent",get_tree().root)

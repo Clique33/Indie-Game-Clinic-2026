@@ -7,9 +7,10 @@ enum PossibleStates {IDLE, WALKING, GOING_DOWN, GOING_UP}
 
 signal changed_facing(left : bool)
 signal changed_state(name : PossibleStates)
+signal landed
 
 
-@export var speed : float = 100.0
+@export var speed : float = 150.0
 @export var jump_velocity : float = -500
 
 
@@ -58,6 +59,7 @@ func is_idle() -> bool:
 func handle_jump() -> void:
 	if Input.is_action_just_pressed("jump") and entity.is_on_floor():
 		entity.velocity.y = jump_velocity
+		entity.velocity.x *= 1.25
 		_on_air = true
 
 
@@ -79,6 +81,8 @@ func _on_state_machine_player_transited(from: Variant, to: Variant) -> void:
 	match to:
 		"Idle":
 			state = PossibleStates.IDLE
+			if from == "GoingDown":
+				landed.emit()
 		"Walking":
 			state = PossibleStates.WALKING
 		"GoingDown":

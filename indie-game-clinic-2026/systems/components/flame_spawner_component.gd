@@ -8,13 +8,14 @@ class_name FlameSpawnerComponent
 var flame_scene : PackedScene = preload("uid://bn8cattr3rwi")
 
 
-func spawn_flame(hidden : bool = true) -> Flame:
+func spawn_flame(color : Color = Color.hex(0xffdaa3), hidden : bool = true) -> Flame:
 	if not spawn_at_position or not parent_node:
 		push_warning("Cannot Spawn. Either 'Parent Node' or 'Spawn At Position' not set.")
 		return null
 	var new_flame : Flame = flame_scene.instantiate()
 	if hidden:
 		new_flame.call_deferred("hide_flame")
+	new_flame.set_deferred("color",color)
 	parent_node.call_deferred("add_child",new_flame)
 	new_flame.set_deferred("position",spawn_at_position.position)
 	return new_flame

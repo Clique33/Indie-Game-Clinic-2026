@@ -76,6 +76,7 @@ func handle_gravity(delta : float) -> void:
 func get_is_facing_left() -> bool:
 	return _is_facing_left
 
+
 func _on_state_machine_player_transited(from: Variant, to: Variant) -> void:
 	var state : PossibleStates
 	match to:

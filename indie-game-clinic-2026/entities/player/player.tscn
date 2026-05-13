@@ -233,6 +233,7 @@ metadata/_custom_type_script = "uid://c0we6sfls40sy"
 position = Vector2(-0.5, -54.5)
 
 [node name="BaseSprite" type="AnimatedSprite2D" parent="." unique_id=133153141]
+self_modulate = Color(0.50140685, 0.5014064, 0.5014066, 1)
 texture_filter = 1
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_b2kln")
@@ -240,6 +241,7 @@ animation = &"walk"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690655228]
+visible = false
 position = Vector2(-0.5, -11.5)
 shape = SubResource("RectangleShape2D_fkugw")
 
@@ -247,6 +249,7 @@ shape = SubResource("RectangleShape2D_fkugw")
 position = Vector2(0, -25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanBeIluminatedArea" unique_id=336438564]
+visible = false
 position = Vector2(-1, -28)
 shape = SubResource("CircleShape2D_bls4j")
 

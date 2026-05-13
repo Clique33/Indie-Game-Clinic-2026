@@ -38,6 +38,7 @@ folder_colors={
 "res://assets/": "purple",
 "res://entities/": "red",
 "res://levels/": "orange",
+"res://resources/": "yellow",
 "res://systems/": "teal",
 "res://tests/": "blue"
 }

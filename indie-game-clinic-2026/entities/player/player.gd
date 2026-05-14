@@ -48,7 +48,7 @@ func handle_light_lamps() -> void:
 	if light_sources_in_range.is_empty():
 		return
 	
-	if Input.is_action_just_released("enter"):
+	if Input.is_action_just_released("turn_on"):
 		for lamp in light_sources_in_range:
 			lamp.turn_on()
 
@@ -67,7 +67,7 @@ func handle_shoot_flame() -> void:
 func handle_spawn_flame() -> void:
 	if not can_ignite or light_sources_in_range.is_empty():
 		return
-	if Input.is_action_just_released("enter"):
+	if Input.is_action_just_released("turn_on"):
 		if not are_there_any_light_sources_lit():
 			return
 		flame_sprite = flame_spawner_component.spawn_flame()

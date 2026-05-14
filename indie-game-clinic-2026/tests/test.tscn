@@ -14,7 +14,6 @@ position = Vector2(-7, 116)
 position = Vector2(48.802, 623.529)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
-zoom = Vector2(2, 2)
 limit_left = -250
 limit_right = 1200
 limit_bottom = 1000
@@ -29,13 +28,19 @@ energy = 0.1
 color = Color(0, 0, 0, 1)
 
 [node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
-position = Vector2(266.14597, 575.326)
+position = Vector2(230.14597, 596.326)
+time_to_fully_dim = 10.0
+time_to_alternate = 1.0
 
 [node name="Lamp2" parent="." unique_id=1076608020 instance=ExtResource("2_eig8f")]
-position = Vector2(732.5095, 311.68964)
+position = Vector2(791.5095, 335.68964)
+time_to_fully_dim = 10.0
+time_to_alternate = 1.0
 
 [node name="Lamp3" parent="." unique_id=1767103788 instance=ExtResource("2_eig8f")]
-position = Vector2(387.96414, 197.14418)
+position = Vector2(594.9641, 197.14418)
+time_to_fully_dim = 10.0
+time_to_alternate = 1.0
 
 [node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
 position = Vector2(-9.097015, 124.31)

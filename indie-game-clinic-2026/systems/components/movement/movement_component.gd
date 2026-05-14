@@ -56,6 +56,14 @@ func is_idle() -> bool:
 	return not entity.velocity
 
 
+func start_turn_on() -> void:
+	state_machine_player.set_trigger("start_turn_on")
+
+
+func end_turn_on() -> void:
+	state_machine_player.set_trigger("end_turn_on")
+
+
 func handle_jump() -> void:
 	if Input.is_action_just_pressed("jump") and entity.is_on_floor():
 		entity.velocity.y = jump_velocity

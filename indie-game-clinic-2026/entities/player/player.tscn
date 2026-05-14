@@ -219,6 +219,7 @@ radius = 20.024984
 polygon = PackedVector2Array(-27, -26, 26, -26, 26, -24, -27, -24)
 
 [node name="Player" type="CharacterBody2D" unique_id=1459404749]
+z_index = 2
 script = ExtResource("1_4flbx")
 
 [node name="MovementComponent" parent="." unique_id=1526532134 instance=ExtResource("2_qiwj3")]
@@ -249,7 +250,6 @@ shape = SubResource("RectangleShape2D_fkugw")
 position = Vector2(0, -25)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CanBeIluminatedArea" unique_id=336438564]
-visible = false
 position = Vector2(-1, -28)
 shape = SubResource("CircleShape2D_bls4j")
 

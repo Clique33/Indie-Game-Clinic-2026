@@ -1,14 +1,127 @@
 [gd_scene format=3 uid="uid://fi8thhimw1r0"]
 
 [ext_resource type="Script" uid="uid://cmsb0w8brow50" path="res://entities/lamps/lamp.gd" id="1_5bncg"]
+[ext_resource type="Texture2D" uid="uid://cxk5w44neb0o" path="res://assets/art/candles/vela_parede_turned_off.png" id="1_o36c0"]
+[ext_resource type="Texture2D" uid="uid://did7q3np8bmyq" path="res://assets/art/candles/vela_parede.png" id="1_p4d5m"]
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="2_0y5yf"]
 [ext_resource type="Texture2D" uid="uid://bupi4ajconhgj" path="res://assets/art/Pixel Flame Spritesheet.png" id="3_0y5yf"]
-[ext_resource type="Texture2D" uid="uid://7vt4ytna8rcc" path="res://assets/art/lamps_32x32.png" id="3_5w0pm"]
-[ext_resource type="AudioStream" uid="uid://b4f2mkk8xjrfd" path="res://resources/sfx/ignite_candle.tres" id="5_p4d5m"]
-[ext_resource type="AudioStream" uid="uid://ghgrku2k57s7" path="res://resources/sfx/buzzing_candle.res" id="6_o36c0"]
+[ext_resource type="Texture2D" uid="uid://c27duwolbbk1g" path="res://assets/art/candles/vela_parede_2.png" id="3_fx42y"]
+[ext_resource type="AudioStream" uid="uid://xls4uup14ymy" path="res://assets/sfx/turn_on.wav" id="5_p4d5m"]
+[ext_resource type="Script" uid="uid://e4l1vg2cslja" path="res://entities/lamps/fully_dim_light.gd" id="7_skrkg"]
+[ext_resource type="AudioStream" uid="uid://cnd37xrt4e70d" path="res://assets/sfx/candle_buzz2.wav" id="9_skrkg"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_5bncg"]
-radius = 3.0
+[sub_resource type="AtlasTexture" id="AtlasTexture_ixwi4"]
+atlas = ExtResource("1_o36c0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o36c0"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fx42y"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_skrkg"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_402u2"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ipypr"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ouq85"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0gam"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5vv45"]
+atlas = ExtResource("1_p4d5m")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dgmy2"]
+atlas = ExtResource("3_fx42y")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_srrjn"]
+atlas = ExtResource("3_fx42y")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_urkty"]
+atlas = ExtResource("3_fx42y")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bx3e6"]
+atlas = ExtResource("3_fx42y")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ixwi4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ixwi4")
+}],
+"loop": false,
+"name": &"turned_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o36c0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fx42y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_skrkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_402u2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ipypr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ouq85")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0gam")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5vv45")
+}],
+"loop": true,
+"name": &"turned_on0",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dgmy2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_srrjn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_urkty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bx3e6")
+}],
+"loop": true,
+"name": &"turned_on1",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p4d5m"]
+radius = 13.5
+height = 34.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bls4j"]
 atlas = ExtResource("3_0y5yf")
@@ -46,27 +159,26 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Lamp" type="Sprite2D" unique_id=1076608020]
+[node name="Lamp" type="AnimatedSprite2D" unique_id=624728340]
 self_modulate = Color(0.45452452, 0.45452422, 0.45452416, 1)
 texture_filter = 1
-texture = ExtResource("3_5w0pm")
+sprite_frames = SubResource("SpriteFrames_ixwi4")
+animation = &"turned_off"
 offset = Vector2(-1, -8)
-region_enabled = true
-region_rect = Rect2(0, 0, 32, 32)
 script = ExtResource("1_5bncg")
 turned_on_energy = 2.0
-time_to_fully_dim = 15.0
 
 [node name="IluminableArea" type="Area2D" parent="." unique_id=1017534225]
-position = Vector2(-0.5, -3)
+position = Vector2(-0.5, -23)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="IluminableArea" unique_id=795687449]
-shape = SubResource("CircleShape2D_5bncg")
+position = Vector2(0.5, 5)
+shape = SubResource("CapsuleShape2D_p4d5m")
 
 [node name="FlameSprite" type="AnimatedSprite2D" parent="." unique_id=1189775636]
 show_behind_parent = true
 texture_filter = 1
-position = Vector2(-0.5, -3.5)
+position = Vector2(-0.5, -23.5)
 scale = Vector2(1e-05, 1e-05)
 sprite_frames = SubResource("SpriteFrames_5w0pm")
 autoplay = "default"
@@ -80,20 +192,26 @@ shadow_enabled = true
 texture = ExtResource("2_0y5yf")
 texture_scale = 0.75
 
-[node name="FullyDimTimer" type="Timer" parent="." unique_id=998509370]
+[node name="LightDimmer" type="Timer" parent="." unique_id=998509370]
 wait_time = 5.0
 one_shot = true
+script = ExtResource("7_skrkg")
 
 [node name="SoundEffects" type="Node" parent="." unique_id=233126082]
 
 [node name="IgnitePlayer" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=384681706]
+position = Vector2(0, -23)
 stream = ExtResource("5_p4d5m")
-pitch_scale = 0.83
+volume_db = 4.0
+pitch_scale = 1.5
 
 [node name="BuzzingPlayer" type="AudioStreamPlayer2D" parent="SoundEffects" unique_id=1337247571]
-stream = ExtResource("6_o36c0")
+position = Vector2(0, -23)
+stream = ExtResource("9_skrkg")
+volume_db = -8.0
 pitch_scale = 0.83
+max_distance = 750.0
 
 [connection signal="area_entered" from="IluminableArea" to="." method="_on_iluminable_area_area_entered"]
 [connection signal="area_exited" from="IluminableArea" to="." method="_on_iluminable_area_area_exited"]
-[connection signal="timeout" from="FullyDimTimer" to="." method="_on_fully_dim_timer_timeout"]
+[connection signal="timeout" from="LightDimmer" to="." method="_on_light_dimmer_finished"]

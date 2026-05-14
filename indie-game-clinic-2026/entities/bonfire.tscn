@@ -1,40 +1,93 @@
 [gd_scene format=3 uid="uid://4f35o1224dyp"]
 
-[ext_resource type="Texture2D" uid="uid://bwosjwqt7pmbs" path="res://assets/art/bonfire.png" id="1_lt62l"]
+[ext_resource type="Texture2D" uid="uid://dw7cqsunjxc61" path="res://assets/art/candles/bonfire/bonfire_turned_off.png" id="1_xxhm5"]
+[ext_resource type="Texture2D" uid="uid://dw6x36oktnmb2" path="res://assets/art/candles/bonfire/bonfire_turned_on.png" id="2_4ieov"]
 [ext_resource type="Script" uid="uid://bos5nicdffa18" path="res://entities/bonfire.gd" id="2_lftts"]
-[ext_resource type="PackedScene" uid="uid://bn8cattr3rwi" path="res://entities/flame.tscn" id="2_sc02d"]
 [ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="4_lftts"]
+[ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="5_xxhm5"]
 
-[node name="Bonfire" type="Sprite2D" unique_id=956425402]
-self_modulate = Color(0.737193, 0.7371929, 0.73719305, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_neevn"]
+atlas = ExtResource("1_xxhm5")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_01rqx"]
+atlas = ExtResource("2_4ieov")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1qk1j"]
+atlas = ExtResource("2_4ieov")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s6uoh"]
+atlas = ExtResource("2_4ieov")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rq237"]
+atlas = ExtResource("2_4ieov")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l4jju"]
+atlas = ExtResource("2_4ieov")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3ulrc"]
+atlas = ExtResource("2_4ieov")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_54l5s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_neevn")
+}],
+"loop": true,
+"name": &"turned_off",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_01rqx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qk1j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s6uoh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rq237")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l4jju")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3ulrc")
+}],
+"loop": true,
+"name": &"turned_on",
+"speed": 5.0
+}]
+
+[node name="Bonfire" type="AnimatedSprite2D" unique_id=981105522]
+self_modulate = Color(0.3553136, 0.35531354, 0.35531357, 1)
 texture_filter = 1
-texture = ExtResource("1_lt62l")
+sprite_frames = SubResource("SpriteFrames_54l5s")
+animation = &"turned_off"
 script = ExtResource("2_lftts")
-
-[node name="Flame" parent="." unique_id=916405316 instance=ExtResource("2_sc02d")]
-position = Vector2(-12, -7)
-intensity = 0.0
-
-[node name="Flame2" parent="." unique_id=405842203 instance=ExtResource("2_sc02d")]
-position = Vector2(-6, -10)
-intensity = 0.0
-
-[node name="Flame3" parent="." unique_id=57461210 instance=ExtResource("2_sc02d")]
-position = Vector2(0, -14)
-
-[node name="FlameLight" parent="Flame3" index="2" unique_id=2101949261]
-texture_scale = 1.0
-
-[node name="Flame4" parent="." unique_id=195536945 instance=ExtResource("2_sc02d")]
-position = Vector2(6, -10)
-intensity = 0.0
-
-[node name="Flame5" parent="." unique_id=93088185 instance=ExtResource("2_sc02d")]
-position = Vector2(12, -7)
-intensity = 0.0
 
 [node name="Lamp" parent="." unique_id=1076608020 instance=ExtResource("4_lftts")]
 visible = false
-position = Vector2(0, -24)
+show_behind_parent = true
+position = Vector2(4.9999995, 37.999996)
+scale = Vector2(10, 10)
+time_to_fully_dim = 100000.0
 
-[editable path="Flame3"]
+[node name="FlameLight" type="PointLight2D" parent="." unique_id=1880050801]
+visible = false
+position = Vector2(0, -22)
+color = Color(1, 0.85490197, 0.6392157, 1)
+energy = 3.0
+shadow_enabled = true
+shadow_filter = 1
+shadow_filter_smooth = 5.0
+texture = ExtResource("5_xxhm5")

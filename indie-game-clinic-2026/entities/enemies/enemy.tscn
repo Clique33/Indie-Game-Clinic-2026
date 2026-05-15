@@ -164,7 +164,15 @@ _data = {
 &"base": SubResource("Animation_msovg")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_5lf1o"]
+radius = 25.019993
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_msovg"]
+radius = 6.0
+
 [node name="Enemy" type="CharacterBody2D" unique_id=785337415]
+collision_layer = 4
+collision_mask = 4
 script = ExtResource("1_owq46")
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=370643102]
@@ -278,3 +286,16 @@ texture_scale = 0.2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2019857248]
 libraries/ = SubResource("AnimationLibrary_twyc1")
 autoplay = &"base"
+
+[node name="HitBox" type="Area2D" parent="." unique_id=2017723328]
+position = Vector2(-2, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=249547342]
+shape = SubResource("CircleShape2D_5lf1o")
+
+[node name="EnemyHitBox" type="CollisionShape2D" parent="." unique_id=1790577996]
+shape = SubResource("CircleShape2D_msovg")
+
+[connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
+[connection signal="area_exited" from="HitBox" to="." method="_on_hit_box_area_exited"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]

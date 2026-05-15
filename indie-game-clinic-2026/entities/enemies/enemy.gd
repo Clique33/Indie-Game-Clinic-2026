@@ -73,3 +73,4 @@ func _on_hit_box_area_exited(area: Area2D) -> void:
 func _on_hit_box_body_entered(body: Node2D) -> void:
 	if body is Player:
 		killed_player.emit()
+		print("DEAD")

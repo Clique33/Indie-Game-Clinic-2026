@@ -63,7 +63,6 @@ autoplay = true
 [node name="FlameLight" type="PointLight2D" parent="." unique_id=2101949261]
 position = Vector2(0, 3)
 color = Color(1, 0.85490197, 0.6392157, 1)
-shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = ExtResource("2_x0l46")

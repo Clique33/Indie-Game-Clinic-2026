@@ -20,7 +20,7 @@ func _ready() -> void:
 	if has_node("FlameSprite"):
 		flame_sprite = get_node("FlameSprite")
 	else:
-		flame_sprite = flame_spawner_component.spawn_flame(Color.WHITE)
+		flame_sprite = flame_spawner_component.spawn_flame(0.5,Color.WHITE)
 
 
 func _physics_process(_delta: float) -> void:
@@ -54,7 +54,7 @@ func handle_spawn_flame() -> void:
 	if Input.is_action_just_released("turn_on"):
 		if not are_there_any_light_sources_lit():
 			return
-		flame_sprite = flame_spawner_component.spawn_flame()
+		flame_sprite = flame_spawner_component.spawn_flame(0.5)
 
 
 func are_there_any_light_sources_lit() -> bool:

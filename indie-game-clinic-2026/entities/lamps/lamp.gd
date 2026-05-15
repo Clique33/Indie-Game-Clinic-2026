@@ -9,7 +9,7 @@ class_name Lamp
 
 var _elapsed_time_since_turned_on : float
 var is_turned_on : bool = false
-var _is_player_in_range : bool = false
+var _player_in_range : Player = null
 
 @onready var flame_sprite: AnimatedSprite2D = $FlameSprite
 @onready var point_light: PointLight2D = $FlameSprite/PointLight2D
@@ -22,9 +22,12 @@ func _ready() -> void:
 	play("turned_off")
 
 
-func turn_on(time: float = time_to_alternate) -> void:
+func turn_on(from_player : bool = true, time: float = time_to_alternate) -> void:
 	if is_turned_on:
 		return
+	if from_player:
+		if not _player_in_range or _player_in_range.can_ignite():
+			return
 	ignite_player.play(0.15)
 	buzzing_player.play()
 	point_light.energy = turned_on_energy
@@ -64,17 +67,17 @@ func _on_iluminable_area_area_entered(area: Area2D) -> void:
 		return
 	
 	if area.get_parent() is Flame and not (area.get_parent() as Flame).is_attached and not is_turned_on:
-		turn_on()
+		turn_on(false)
 	
 	if area.get_parent() is Player and (area.get_parent() as Player).can_ignite:
-		_is_player_in_range = true
+		_player_in_range = area.get_parent() as Player
 
 
 func _on_iluminable_area_area_exited(area: Area2D) -> void:
 	if not area.get_parent():
 		return
 	if area.get_parent() is Player:
-		_is_player_in_range = false
+		_player_in_range = null
 
 
 func _on_light_dimmer_finished() -> void:

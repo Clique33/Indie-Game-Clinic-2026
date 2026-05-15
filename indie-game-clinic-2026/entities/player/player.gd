@@ -2,22 +2,7 @@ extends CharacterBody2D
 class_name Player
 
 
-var flame_sprite: Flame:
-	set(value):
-		flame_sprite = value
-		if not value:
-			can_ignite = true
-		else:
-			can_ignite = false
-
-
-var can_ignite : bool = false:
-	set(value):
-		can_ignite = value
-		if can_ignite_label:
-			can_ignite_label.text = "can ignite? "+str(can_ignite)
-
-
+var flame_sprite: Flame
 var light_sources_in_range : Array[Lamp] = []
 
 
@@ -61,17 +46,15 @@ func handle_shoot_flame() -> void:
 		flame_sprite.shoot_left = movement_component.get_is_facing_left()
 		flame_sprite.shoot()
 		flame_sprite = null
-		can_ignite = true
 
 
 func handle_spawn_flame() -> void:
-	if not can_ignite or light_sources_in_range.is_empty():
+	if not can_ignite() or light_sources_in_range.is_empty():
 		return
 	if Input.is_action_just_released("turn_on"):
 		if not are_there_any_light_sources_lit():
 			return
 		flame_sprite = flame_spawner_component.spawn_flame()
-		can_ignite = false
 
 
 func are_there_any_light_sources_lit() -> bool:
@@ -79,6 +62,11 @@ func are_there_any_light_sources_lit() -> bool:
 		if light_source.is_turned_on:
 			return true
 	return false
+
+
+func can_ignite() -> bool:
+	return not flame_sprite
+
 
 func _on_can_be_iluminated_area_area_entered(area: Area2D) -> void:
 	if area.get_parent() is Lamp:

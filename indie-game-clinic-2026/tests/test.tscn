@@ -9,6 +9,7 @@
 [node name="Test" type="Node2D" unique_id=7882562]
 
 [node name="Level" parent="." unique_id=486952134 instance=ExtResource("5_dsb46")]
+self_modulate = Color(0.4506483, 0.4506483, 0.45064825, 1)
 position = Vector2(-7, 116)
 
 [node name="Player" parent="." unique_id=1459404749 instance=ExtResource("1_yggfj")]
@@ -27,11 +28,9 @@ position = Vector2(135.08698, 606.7151)
 player = NodePath("../Player")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
-visible = false
-energy = 0.1
+energy = 0.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]

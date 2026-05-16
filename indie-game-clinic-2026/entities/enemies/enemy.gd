@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+class_name Enemy
 
 const LIGHTING_X_ORIGINAL : float = 0
 const LIGHTING_X_FLIPPED : float = 15
@@ -21,7 +21,7 @@ signal killed_player
 @onready var hit_box: Area2D = $HitBox
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if player:
 		look_to(is_right())
 
@@ -40,7 +40,7 @@ func is_right() -> bool:
 				) < 90
 
 
-func run_away_from(danger : Node2D) -> void:
+func run_away_from(_danger : Node2D) -> void:
 	push_error("TODO")
 
 

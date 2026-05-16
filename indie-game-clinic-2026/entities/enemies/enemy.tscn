@@ -3,6 +3,12 @@
 [ext_resource type="Script" uid="uid://cxktnvhp8jvjw" path="res://entities/enemies/enemy.gd" id="1_owq46"]
 [ext_resource type="Texture2D" uid="uid://b6relx3k8ck1w" path="res://assets/art/enemies/inimigo.png" id="2_5lf1o"]
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="3_msovg"]
+[ext_resource type="Script" uid="uid://dpwx620rqoy43" path="res://entities/enemies/state_machines/state_machine_manager.gd" id="4_56i32"]
+[ext_resource type="Script" uid="uid://byk1ah113xskx" path="res://addons/imjp94.yafsm/src/StateMachinePlayer.gd" id="4_gj3y3"]
+[ext_resource type="Script" uid="uid://x3fyox1mm1c5" path="res://addons/imjp94.yafsm/src/states/StateMachine.gd" id="5_56i32"]
+[ext_resource type="Script" uid="uid://b47k3uw57tkrm" path="res://addons/imjp94.yafsm/src/states/State.gd" id="6_sb13e"]
+[ext_resource type="Script" uid="uid://p5r7y7oaxpjt" path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" id="7_3udgd"]
+[ext_resource type="Script" uid="uid://d2ipbppwstm06" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="8_vabdn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twyc1"]
 atlas = ExtResource("2_5lf1o")
@@ -170,6 +176,198 @@ radius = 25.019993
 [sub_resource type="CircleShape2D" id="CircleShape2D_msovg"]
 radius = 6.0
 
+[sub_resource type="Resource" id="Resource_nrfwl"]
+script = ExtResource("6_sb13e")
+name = "Entry"
+metadata/graph_offset = Vector2(121, 62.5)
+
+[sub_resource type="Resource" id="Resource_5xow2"]
+script = ExtResource("6_sb13e")
+name = "Idle"
+metadata/graph_offset = Vector2(321, 62.5)
+
+[sub_resource type="Resource" id="Resource_xmuku"]
+script = ExtResource("6_sb13e")
+name = "RunningAway"
+metadata/graph_offset = Vector2(623, 242.5)
+
+[sub_resource type="Resource" id="Resource_2ggct"]
+script = ExtResource("6_sb13e")
+name = "Attacking"
+metadata/graph_offset = Vector2(637.5, 402.5)
+
+[sub_resource type="Resource" id="Resource_wy1il"]
+script = ExtResource("6_sb13e")
+name = "KeepingDistance"
+metadata/graph_offset = Vector2(293.5, 402.5)
+
+[sub_resource type="Resource" id="Resource_53k0f"]
+script = ExtResource("6_sb13e")
+name = "GoingBackToIdle"
+metadata/graph_offset = Vector2(613.5, 62.49997)
+
+[sub_resource type="Resource" id="Resource_gj3y3"]
+script = ExtResource("6_sb13e")
+name = "PlayerBecameVulnerable"
+metadata/graph_offset = Vector2(267.5, 242.5)
+
+[sub_resource type="Resource" id="Resource_u01qb"]
+script = ExtResource("7_3udgd")
+from = "Entry"
+to = "Idle"
+
+[sub_resource type="Resource" id="Resource_4teby"]
+script = ExtResource("8_vabdn")
+name = "light_within_range"
+
+[sub_resource type="Resource" id="Resource_bjdlj"]
+script = ExtResource("7_3udgd")
+from = "Idle"
+to = "RunningAway"
+conditions = {
+"light_within_range": SubResource("Resource_4teby")
+}
+
+[sub_resource type="Resource" id="Resource_56i32"]
+script = ExtResource("8_vabdn")
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_sb13e"]
+script = ExtResource("7_3udgd")
+from = "Idle"
+to = "PlayerBecameVulnerable"
+conditions = {
+"player_is_dimming": SubResource("Resource_56i32")
+}
+
+[sub_resource type="Resource" id="Resource_ku6gj"]
+script = ExtResource("8_vabdn")
+name = "light_out_of_range"
+
+[sub_resource type="Resource" id="Resource_8edke"]
+script = ExtResource("7_3udgd")
+from = "RunningAway"
+to = "GoingBackToIdle"
+conditions = {
+"light_out_of_range": SubResource("Resource_ku6gj")
+}
+
+[sub_resource type="Resource" id="Resource_3udgd"]
+script = ExtResource("8_vabdn")
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_vabdn"]
+script = ExtResource("7_3udgd")
+from = "RunningAway"
+to = "PlayerBecameVulnerable"
+conditions = {
+"player_is_dimming": SubResource("Resource_3udgd")
+}
+
+[sub_resource type="Resource" id="Resource_y4tt3"]
+script = ExtResource("8_vabdn")
+name = "back_to_initial_pos"
+
+[sub_resource type="Resource" id="Resource_21xsh"]
+script = ExtResource("7_3udgd")
+from = "GoingBackToIdle"
+to = "Idle"
+conditions = {
+"back_to_initial_pos": SubResource("Resource_y4tt3")
+}
+
+[sub_resource type="Resource" id="Resource_rag6w"]
+script = ExtResource("8_vabdn")
+name = "player_is_vulnerable"
+
+[sub_resource type="Resource" id="Resource_ftsks"]
+script = ExtResource("7_3udgd")
+from = "KeepingDistance"
+to = "Attacking"
+conditions = {
+"player_is_vulnerable": SubResource("Resource_rag6w")
+}
+
+[sub_resource type="Resource" id="Resource_dec5i"]
+script = ExtResource("8_vabdn")
+name = "light_within_range"
+
+[sub_resource type="Resource" id="Resource_0j0it"]
+script = ExtResource("7_3udgd")
+from = "KeepingDistance"
+to = "RunningAway"
+conditions = {
+"light_within_range": SubResource("Resource_dec5i")
+}
+
+[sub_resource type="Resource" id="Resource_lmmiu"]
+script = ExtResource("7_3udgd")
+from = "PlayerBecameVulnerable"
+to = "KeepingDistance"
+
+[sub_resource type="Resource" id="Resource_vkm0h"]
+script = ExtResource("8_vabdn")
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_llg7d"]
+script = ExtResource("7_3udgd")
+from = "Attacking"
+to = "KeepingDistance"
+conditions = {
+"player_is_dimming": SubResource("Resource_vkm0h")
+}
+
+[sub_resource type="Resource" id="Resource_nkaw1"]
+script = ExtResource("8_vabdn")
+name = "light_within_range"
+
+[sub_resource type="Resource" id="Resource_6fcqh"]
+script = ExtResource("7_3udgd")
+from = "Attacking"
+to = "RunningAway"
+conditions = {
+"light_within_range": SubResource("Resource_nkaw1")
+}
+
+[sub_resource type="Resource" id="Resource_2k7wq"]
+script = ExtResource("5_56i32")
+states = {
+"Attacking": SubResource("Resource_2ggct"),
+"Entry": SubResource("Resource_nrfwl"),
+"GoingBackToIdle": SubResource("Resource_53k0f"),
+"Idle": SubResource("Resource_5xow2"),
+"KeepingDistance": SubResource("Resource_wy1il"),
+"PlayerBecameVulnerable": SubResource("Resource_gj3y3"),
+"RunningAway": SubResource("Resource_xmuku")
+}
+transitions = {
+"Attacking": {
+"KeepingDistance": SubResource("Resource_llg7d"),
+"RunningAway": SubResource("Resource_6fcqh")
+},
+"Entry": {
+"Idle": SubResource("Resource_u01qb")
+},
+"GoingBackToIdle": {
+"Idle": SubResource("Resource_21xsh")
+},
+"Idle": {
+"PlayerBecameVulnerable": SubResource("Resource_sb13e"),
+"RunningAway": SubResource("Resource_bjdlj")
+},
+"KeepingDistance": {
+"Attacking": SubResource("Resource_ftsks"),
+"RunningAway": SubResource("Resource_0j0it")
+},
+"PlayerBecameVulnerable": {
+"KeepingDistance": SubResource("Resource_lmmiu")
+},
+"RunningAway": {
+"GoingBackToIdle": SubResource("Resource_8edke"),
+"PlayerBecameVulnerable": SubResource("Resource_vabdn")
+}
+}
+
 [node name="Enemy" type="CharacterBody2D" unique_id=785337415]
 collision_layer = 4
 collision_mask = 4
@@ -297,6 +495,16 @@ shape = SubResource("CircleShape2D_5lf1o")
 [node name="EnemyHitBox" type="CollisionShape2D" parent="." unique_id=1790577996]
 shape = SubResource("CircleShape2D_msovg")
 
+[node name="StateMachineManager" type="Node" parent="." unique_id=715229103]
+script = ExtResource("4_56i32")
+
+[node name="StateMachinePlayer" type="Node" parent="StateMachineManager" unique_id=409754602]
+script = ExtResource("4_gj3y3")
+state_machine = SubResource("Resource_2k7wq")
+metadata/_custom_type_script = "uid://byk1ah113xskx"
+
 [connection signal="area_entered" from="HitBox" to="." method="_on_hit_box_area_entered"]
 [connection signal="area_exited" from="HitBox" to="." method="_on_hit_box_area_exited"]
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
+[connection signal="transited" from="StateMachineManager/StateMachinePlayer" to="StateMachineManager" method="_on_state_machine_player_transited"]
+[connection signal="updated" from="StateMachineManager/StateMachinePlayer" to="StateMachineManager" method="_on_state_machine_player_updated"]

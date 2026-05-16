@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="2_0y5yf"]
 [ext_resource type="Texture2D" uid="uid://bupi4ajconhgj" path="res://assets/art/Pixel Flame Spritesheet.png" id="3_0y5yf"]
 [ext_resource type="Texture2D" uid="uid://c27duwolbbk1g" path="res://assets/art/candles/vela_parede_2.png" id="3_fx42y"]
+[ext_resource type="Script" uid="uid://kayfu1yls04t" path="res://entities/lamps/lamp_areas_manager.gd" id="5_402u2"]
 [ext_resource type="AudioStream" uid="uid://xls4uup14ymy" path="res://assets/sfx/turn_on.wav" id="5_p4d5m"]
 [ext_resource type="Script" uid="uid://e4l1vg2cslja" path="res://entities/lamps/fully_dim_light.gd" id="7_skrkg"]
 [ext_resource type="AudioStream" uid="uid://cnd37xrt4e70d" path="res://assets/sfx/candle_buzz2.wav" id="9_skrkg"]
@@ -119,6 +120,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_ipypr"]
+radius = 256.0
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_p4d5m"]
 radius = 13.5
 height = 34.0
@@ -168,10 +172,21 @@ offset = Vector2(-1, -8)
 script = ExtResource("1_5bncg")
 turned_on_energy = 2.0
 
-[node name="IluminableArea" type="Area2D" parent="." unique_id=1017534225]
+[node name="AreasManager" type="Node2D" parent="." unique_id=1597196474]
+script = ExtResource("5_402u2")
+
+[node name="ScareArea" type="Area2D" parent="AreasManager" unique_id=1061406730]
 position = Vector2(-0.5, -23)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="IluminableArea" unique_id=795687449]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreasManager/ScareArea" unique_id=596823021]
+position = Vector2(0.5, 5)
+shape = SubResource("CircleShape2D_ipypr")
+debug_color = Color(0.9106686, 0.0001037699, 0.7309832, 0.41960785)
+
+[node name="IluminableArea" type="Area2D" parent="AreasManager" unique_id=1017534225]
+position = Vector2(-0.5, -23)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AreasManager/IluminableArea" unique_id=795687449]
 position = Vector2(0.5, 5)
 shape = SubResource("CapsuleShape2D_p4d5m")
 
@@ -212,6 +227,8 @@ volume_db = -8.0
 pitch_scale = 0.83
 max_distance = 750.0
 
-[connection signal="area_entered" from="IluminableArea" to="." method="_on_iluminable_area_area_entered"]
-[connection signal="area_exited" from="IluminableArea" to="." method="_on_iluminable_area_area_exited"]
+[connection signal="body_entered" from="AreasManager/ScareArea" to="AreasManager" method="_on_scare_area_body_entered"]
+[connection signal="body_exited" from="AreasManager/ScareArea" to="AreasManager" method="_on_scare_area_body_exited"]
+[connection signal="area_entered" from="AreasManager/IluminableArea" to="AreasManager" method="_on_iluminable_area_area_entered"]
+[connection signal="area_exited" from="AreasManager/IluminableArea" to="AreasManager" method="_on_iluminable_area_area_exited"]
 [connection signal="timeout" from="LightDimmer" to="." method="_on_light_dimmer_finished"]

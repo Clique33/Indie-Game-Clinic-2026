@@ -69,14 +69,15 @@ func can_ignite() -> bool:
 
 
 func _on_can_be_iluminated_area_area_entered(area: Area2D) -> void:
-	if area.get_parent() is Lamp:
-		light_sources_in_range.append(area.get_parent())
+	print(area.get_parent().name)
+	if area.name == "IluminableArea":
+		light_sources_in_range.append(area.get_parent().lamp)
 	is_light_source_in_range_label.text = "light sources: " + str(light_sources_in_range)
 
 
 func _on_can_be_iluminated_area_area_exited(area: Area2D) -> void:
-	if area.get_parent() is Lamp:
-		light_sources_in_range.erase(area.get_parent())
+	if area.get_parent() is LampAreasManager:
+		light_sources_in_range.erase((area.get_parent() as LampAreasManager).lamp)
 	is_light_source_in_range_label.text = "light sources: " + str(light_sources_in_range) 
 
 

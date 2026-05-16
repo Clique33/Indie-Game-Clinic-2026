@@ -22,10 +22,12 @@ func _ready() -> void:
 	play("turned_off")
 
 
-func turn_on(from_player : bool = true, time: float = time_to_alternate) -> void:
+func turn_on(from_player : bool = true, _time: float = time_to_alternate) -> void:
+	print("tried turning")
 	if is_turned_on:
 		return
 	if from_player:
+		print("player in range: ",_player_in_range, " can ignite: ", _player_in_range.can_ignite())
 		if not _player_in_range or _player_in_range.can_ignite():
 			return
 	ignite_player.play(0.15)
@@ -60,24 +62,6 @@ func alternate(time : float = time_to_alternate) -> void:
 		turn_on(time)
 	else:
 		turn_off(time)
-
-
-func _on_iluminable_area_area_entered(area: Area2D) -> void:
-	if not area.get_parent():
-		return
-	
-	if area.get_parent() is Flame and not (area.get_parent() as Flame).is_attached and not is_turned_on:
-		turn_on(false)
-	
-	if area.get_parent() is Player and (area.get_parent() as Player).can_ignite:
-		_player_in_range = area.get_parent() as Player
-
-
-func _on_iluminable_area_area_exited(area: Area2D) -> void:
-	if not area.get_parent():
-		return
-	if area.get_parent() is Player:
-		_player_in_range = null
 
 
 func _on_light_dimmer_finished() -> void:

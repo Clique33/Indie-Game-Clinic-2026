@@ -254,7 +254,6 @@ position = Vector2(-1, -28)
 shape = SubResource("CircleShape2D_bls4j")
 
 [node name="Debug" type="Control" parent="." unique_id=951601906]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_top = -77.0

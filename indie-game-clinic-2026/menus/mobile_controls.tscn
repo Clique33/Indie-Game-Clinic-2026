@@ -1,0 +1,122 @@
+[gd_scene format=3 uid="uid://dy8jebt8l5470"]
+
+[ext_resource type="Script" uid="uid://d3tuefn18x040" path="res://controls.gd" id="1_klly3"]
+
+[node name="MobileControlsLayer" type="CanvasLayer" unique_id=374146741]
+layer = 3
+script = ExtResource("1_klly3")
+
+[node name="Control" type="Control" parent="." unique_id=1326918446]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=1094098690]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -56.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=2134187131]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer" unique_id=67396809]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Movement" type="GridContainer" parent="Control/VBoxContainer/HBoxContainer" unique_id=1994457213]
+layout_mode = 2
+columns = 3
+
+[node name="Left" type="Button" parent="Control/VBoxContainer/HBoxContainer/Movement" unique_id=2116827017]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "A"
+
+[node name="ColorRect3" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Movement" unique_id=994056151]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Right" type="Button" parent="Control/VBoxContainer/HBoxContainer/Movement" unique_id=1675486730]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "D"
+
+[node name="ColorRect4" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Movement" unique_id=384459222]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect5" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Movement" unique_id=868154643]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect6" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Movement" unique_id=1791595778]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect2" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer" unique_id=2093988010]
+custom_minimum_size = Vector2(560, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="Actions" type="GridContainer" parent="Control/VBoxContainer/HBoxContainer" unique_id=1799316762]
+layout_mode = 2
+columns = 2
+
+[node name="ColorRect2" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Actions" unique_id=370041386]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="B" type="Button" parent="Control/VBoxContainer/HBoxContainer/Actions" unique_id=1311155040]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "ENTER"
+
+[node name="A" type="Button" parent="Control/VBoxContainer/HBoxContainer/Actions" unique_id=1434228442]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+text = "W"
+
+[node name="ColorRect" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Actions" unique_id=2103580837]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect3" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Actions" unique_id=90128234]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect4" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer/Actions" unique_id=1694920832]
+custom_minimum_size = Vector2(64, 16)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect3" type="ColorRect" parent="Control/VBoxContainer/HBoxContainer" unique_id=272032690]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[node name="ColorRect" type="ColorRect" parent="Control/VBoxContainer" unique_id=551436624]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="button_down" from="Control/VBoxContainer/HBoxContainer/Movement/Left" to="." method="_on_left_pressed"]
+[connection signal="button_up" from="Control/VBoxContainer/HBoxContainer/Movement/Left" to="." method="_on_left_released"]
+[connection signal="button_down" from="Control/VBoxContainer/HBoxContainer/Movement/Right" to="." method="_on_right_pressed"]
+[connection signal="button_up" from="Control/VBoxContainer/HBoxContainer/Movement/Right" to="." method="_on_right_released"]
+[connection signal="button_down" from="Control/VBoxContainer/HBoxContainer/Actions/B" to="." method="_on_light_pressed"]
+[connection signal="button_up" from="Control/VBoxContainer/HBoxContainer/Actions/B" to="." method="_on_light_released"]
+[connection signal="button_down" from="Control/VBoxContainer/HBoxContainer/Actions/A" to="." method="_on_jump_pressed"]
+[connection signal="button_up" from="Control/VBoxContainer/HBoxContainer/Actions/A" to="." method="_on_jump_released"]

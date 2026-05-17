@@ -19,11 +19,14 @@ extends Node2D
 @onready var canvas_modulate: CanvasModulate = $CanvasModulate
 @onready var ambience_player: AudioStreamPlayer = $AmbiencePlayer
 @onready var camera: Camera2D = $Player/Camera2D
+@onready var mobile_controls_layer: CanvasLayer = $MobileControlsLayer
 
 
 func _ready() -> void:
 	canvas_modulate.visible = true
 	level = level
+	if Global.is_mobile:
+		mobile_controls_layer.visible = true
 
 
 func _on_player_player_died() -> void:

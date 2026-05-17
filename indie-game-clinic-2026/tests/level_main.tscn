@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="3_iiot3"]
 [ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/lamps/bonfire.tscn" id="4_2nm31"]
 [ext_resource type="AudioStream" uid="uid://cr5ulj8bggkh1" path="res://assets/music/dragon-studio-halloween-creepy-basement-511329.mp3" id="5_qta58"]
+[ext_resource type="PackedScene" uid="uid://dy8jebt8l5470" path="res://menus/mobile_controls.tscn" id="6_lrp2o"]
 
 [node name="Main" type="Node2D" unique_id=7882562]
 script = ExtResource("1_jn3m2")
@@ -40,6 +41,9 @@ stream = ExtResource("5_qta58")
 volume_db = -13.5
 autoplay = true
 parameters/looping = true
+
+[node name="MobileControlsLayer" parent="." unique_id=374146741 instance=ExtResource("6_lrp2o")]
+visible = false
 
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]

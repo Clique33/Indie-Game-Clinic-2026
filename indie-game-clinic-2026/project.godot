@@ -19,6 +19,7 @@ config/icon="res://assets/art/icon.svg"
 [autoload]
 
 EasyTransition="*uid://cq0t7o8xelk4k"
+Global="*uid://gd5t46werks"
 
 [display]
 

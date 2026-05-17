@@ -14,7 +14,7 @@ func _ready() -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action("jump"):
-		_on_space_button_pressed()
+		transition()
 
 func alternate_button_animation() -> void:
 	tween = create_tween()
@@ -25,5 +25,10 @@ func alternate_button_animation() -> void:
 		tween.tween_property(space_button,"self_modulate",Color.WHITE,1.25)
 
 
-func _on_space_button_pressed() -> void:
+func transition() -> void:
 	EasyTransition.transition_to_path("uid://dg6sve8kidkd3",1.5,EasyTransition.TransitionAnim.CIRCLE_CENTER_COLLAPSE)
+
+
+func _on_space_button_pressed() -> void:
+	Global.is_mobile = true
+	transition()

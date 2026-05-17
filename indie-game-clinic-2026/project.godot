@@ -16,6 +16,10 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 boot_splash/bg_color=Color(0, 0, 0, 1)
 config/icon="res://assets/art/icon.svg"
 
+[autoload]
+
+EasyTransition="*uid://cq0t7o8xelk4k"
+
 [display]
 
 window/size/viewport_width=960
@@ -29,7 +33,7 @@ movie_writer/movie_file="C:/Users/gabri/OneDrive/Desktop/flame lighting.avi"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/imjp94.yafsm/plugin.cfg")
+enabled=PackedStringArray("res://addons/easytransition/plugin.cfg", "res://addons/imjp94.yafsm/plugin.cfg")
 
 [file_customization]
 

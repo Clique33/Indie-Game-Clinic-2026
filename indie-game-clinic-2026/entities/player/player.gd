@@ -4,6 +4,7 @@ class_name Player
 
 signal player_is_vulnerable
 signal player_is_dimming
+signal player_died
 
 
 @export var time_to_fully_dim : float = 15
@@ -58,9 +59,8 @@ func _physics_process(_delta: float) -> void:
 func died():
 	_is_dead = true
 	movement_component.enabled = false
-	await get_tree().create_timer(3).timeout
-	get_tree().reload_current_scene()
-
+	player_died.emit()
+	
 func handle_light_lamps() -> void:
 	if light_sources_in_range.is_empty():
 		return

@@ -10,6 +10,7 @@ signal changed_state(name : PossibleStates)
 signal landed
 
 
+@export var enabled : bool = true
 @export var speed : float = 150.0
 @export var jump_velocity : float = -500
 
@@ -24,6 +25,8 @@ var _is_walking : bool = false
 
 
 func _physics_process(delta: float) -> void:
+	if not enabled:
+		return
 	handle_gravity(delta)
 	handle_jump()
 	handle_walk()

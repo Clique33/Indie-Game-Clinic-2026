@@ -13,9 +13,12 @@ signal killed_player
 
 
 @export var player : Player
+@export_category("Speeds")
 @export var back_to_idle_speed : float = 200
-@export var attack_speed : float = 200
+@export var attack_speed : float = 400
 @export var run_away_speed : float = 200
+@export var stalk_speed : float = 200
+@export var stalk_distance : float = 100
 
 
 var initial_position : Vector2
@@ -57,6 +60,10 @@ func is_right() -> bool:
 				) < 90
 
 
+func player_is_vulnerable() -> void:
+	state_machine_player.set_trigger("player_is_vulnerable")
+
+
 func run_away_from(danger : Lamp) -> void:
 	state_machine_player.set_trigger("light_within_range")
 	direction_vector = danger.global_position.direction_to(global_position)
@@ -65,6 +72,21 @@ func run_away_from(danger : Lamp) -> void:
 
 func stop_running_away_from(_danger : Lamp) -> void:
 	state_machine_player.set_trigger("light_out_of_range")
+
+
+func attack_player() -> void:
+	direction_vector = global_position.direction_to(player.global_position)
+	current_speed = attack_speed
+	print("atacking")
+
+
+func stalk_player() -> void:
+	state_machine_player.set_trigger("player_is_dimming")
+
+
+func stop_movement() -> void:
+	current_speed = 0
+	direction_vector = Vector2.ZERO
 
 
 func look_to(right : bool) -> void:
@@ -82,3 +104,4 @@ func look_to(right : bool) -> void:
 func _on_hit_box_body_entered(body: Node2D) -> void:
 	if body is Player:
 		killed_player.emit()
+		state_machine_player.set_trigger("player_is_dead")

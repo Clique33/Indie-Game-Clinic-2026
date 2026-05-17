@@ -17,6 +17,7 @@ position = Vector2(-7, 116)
 
 [node name="Player" parent="." unique_id=1459404749 instance=ExtResource("1_yggfj")]
 position = Vector2(48.802, 623.529)
+time_to_fully_dim = 8.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
 limit_left = -250
@@ -25,19 +26,49 @@ limit_bottom = 1000
 drag_horizontal_enabled = true
 drag_horizontal_offset = 0.1
 
-[node name="Enemies" type="Node2D" parent="." unique_id=821393978]
+[node name="Enemies" type="Node2D" parent="." unique_id=821393978 node_paths=PackedStringArray("player")]
 script = ExtResource("4_mm0ke")
+player = NodePath("../Player")
 
 [node name="Enemy" parent="Enemies" unique_id=785337415 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
 z_index = 3
-position = Vector2(150.0127, 568.4103)
+position = Vector2(-24.294312, 384.24365)
+player = NodePath("../../Player")
+
+[node name="Enemy2" parent="Enemies" unique_id=109796140 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+z_index = 3
+position = Vector2(-278.50714, 142.5846)
+player = NodePath("../../Player")
+
+[node name="Enemy3" parent="Enemies" unique_id=997050176 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+z_index = 3
+position = Vector2(559.4535, 704.36346)
+player = NodePath("../../Player")
+
+[node name="Enemy4" parent="Enemies" unique_id=596672549 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+z_index = 3
+position = Vector2(854.4658, 39.01648)
+player = NodePath("../../Player")
+
+[node name="Enemy5" parent="Enemies" unique_id=1270422149 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+z_index = 3
+position = Vector2(211.08789, 164.55365)
+player = NodePath("../../Player")
+
+[node name="Enemy6" parent="Enemies" unique_id=1402066924 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+z_index = 3
+position = Vector2(-168.66211, 591.37994)
+player = NodePath("../../Player")
+
+[node name="Enemy7" parent="Enemies" unique_id=1461293684 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+z_index = 3
+position = Vector2(35.335815, -26.890564)
 player = NodePath("../../Player")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
 energy = 0.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
-visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]

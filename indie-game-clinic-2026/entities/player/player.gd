@@ -2,10 +2,25 @@ extends CharacterBody2D
 class_name Player
 
 
-var flame_sprite: Flame
+signal player_is_vulnerable
+signal player_is_dimming
+
+
+@export var time_to_fully_dim : float = 15
+
+
+var flame_sprite: Flame:
+	set(value):
+		flame_sprite = value
+		if not flame_sprite:
+			vulnerable_light.visible = true
+		else:
+			vulnerable_light.visible = false
 var light_sources_in_range : Array[Lamp] = []
+var _is_dead : bool = false
 
 
+@onready var vulnerable_light: PointLight2D = $VulnerableLight
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var flame_spawner_component: FlameSpawnerComponent = $FlameSpawnerComponent
@@ -14,20 +29,33 @@ var light_sources_in_range : Array[Lamp] = []
 @onready var footsteps_player: AudioStreamPlayer2D = $SfxPlayers/FootstepsPlayer
 @onready var jump_player: AudioStreamPlayer2D = $SfxPlayers/JumpPlayer
 @onready var land_player: AudioStreamPlayer2D = $SfxPlayers/LandPlayer
+@onready var light_dimmer: LightDimmer = $LightDimmer
 
 
 func _ready() -> void:
 	if has_node("FlameSprite"):
 		flame_sprite = get_node("FlameSprite")
 	else:
-		flame_sprite = flame_spawner_component.spawn_flame(0.5,Color.WHITE)
+		flame_sprite = flame_spawner_component.spawn_flame(1.5,Color.WHITE)
+		if flame_sprite:
+			light_dimmer.start(time_to_fully_dim)
 
 
 func _physics_process(_delta: float) -> void:
+	if _is_dead:
+		return
 	handle_light_lamps()
 	handle_shoot_flame()
 	handle_spawn_flame()
+	if not flame_sprite:
+		player_is_vulnerable.emit()
 
+
+func died():
+	_is_dead = true
+	movement_component.enabled = false
+	await get_tree().create_timer(3).timeout
+	get_tree().reload_current_scene()
 
 func handle_light_lamps() -> void:
 	if light_sources_in_range.is_empty():
@@ -54,7 +82,9 @@ func handle_spawn_flame() -> void:
 	if Input.is_action_just_released("turn_on"):
 		if not are_there_any_light_sources_lit():
 			return
-		flame_sprite = flame_spawner_component.spawn_flame(0.5)
+		flame_sprite = flame_spawner_component.spawn_flame(1.5)
+		if flame_sprite:
+			light_dimmer.start(time_to_fully_dim)
 
 
 func are_there_any_light_sources_lit() -> bool:
@@ -110,3 +140,16 @@ func _on_base_sprite_frame_changed() -> void:
 			match base_sprite.frame:
 				2,7:
 					footsteps_player.play()
+
+
+func _on_light_dimmer_timeout() -> void:
+	flame_sprite.queue_free()
+	flame_sprite = null
+
+
+func _on_light_dimmer_percentage_passed(current_percentage: float) -> void:
+	if not flame_sprite:
+		return
+	if current_percentage > 0.5:
+		player_is_dimming.emit()
+	flame_sprite.light_radius_scale *= (1-light_dimmer.percentage_to_signal)

@@ -206,11 +206,9 @@ position = Vector2(0, 2.5)
 color = Color(1, 0.92266667, 0.71000004, 1)
 energy = 0.0
 texture = ExtResource("2_0y5yf")
-texture_scale = 0.75
 
 [node name="LightDimmer" type="Timer" parent="." unique_id=998509370]
 wait_time = 5.0
-one_shot = true
 script = ExtResource("7_skrkg")
 
 [node name="SoundEffects" type="Node" parent="." unique_id=233126082]

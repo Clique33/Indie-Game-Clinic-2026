@@ -1,9 +1,15 @@
 extends Node2D
 
 
+@export var player : Player
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func connect_lamps_to_enemies(lamps_parent : Node2D) -> void:
-	for enemy in get_children():
-		for lamp in lamps_parent.get_children():
-			pass
+
+func _ready() -> void:
+	if player:
+		connect_lamps_to_enemies()
+
+
+func connect_lamps_to_enemies() -> void:
+	for enemy : Enemy in get_children():
+		player.player_is_vulnerable.connect(enemy.player_is_vulnerable)
+		player.player_is_dimming.connect(enemy.stalk_player)

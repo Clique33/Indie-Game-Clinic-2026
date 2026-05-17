@@ -8,7 +8,7 @@ class_name Flame
 		intensity = value
 		if flame_light:
 			flame_light.energy = value
-@export var light_radius_scale : float = 1:
+@export var light_radius_scale : float = 1.5:
 	set(value):
 		light_radius_scale = value
 		if flame_light:
@@ -31,6 +31,7 @@ var _was_shot : bool = false
 
 func _ready() -> void:
 	flame_light.energy = intensity
+	flame_light.texture_scale = light_radius_scale
 	if get_parent() is Player:
 		is_attached = true
 		flame_sprite.visible = false

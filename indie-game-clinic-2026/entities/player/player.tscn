@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bmebh8syonlju"]
 
 [ext_resource type="Script" uid="uid://3kdqoyoxpkxw" path="res://entities/player/player.gd" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://e4l1vg2cslja" path="res://entities/lamps/fully_dim_light.gd" id="2_7thud"]
 [ext_resource type="PackedScene" uid="uid://cwcjmyhf5cm3f" path="res://systems/components/movement/movement_component.tscn" id="2_qiwj3"]
 [ext_resource type="Texture2D" uid="uid://bmy1gsdo3w68s" path="res://assets/art/player/idle.png" id="4_fkugw"]
 [ext_resource type="Texture2D" uid="uid://dn8ot1ewfygaj" path="res://assets/art/player/jump.png" id="5_8fjmc"]
@@ -10,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://d248ns60a2hvr" path="res://assets/sfx/gabriel/steps.wav" id="8_26q78"]
 [ext_resource type="AudioStream" uid="uid://cu01gjucxuj3g" path="res://assets/sfx/gabriel/jump.wav" id="9_bectd"]
 [ext_resource type="AudioStream" uid="uid://bdb84q7sy1lng" path="res://assets/sfx/gabriel/land.wav" id="10_wvtmh"]
+[ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="12_a1qjk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eyb6c"]
 atlas = ExtResource("6_8fjmc")
@@ -222,6 +224,11 @@ polygon = PackedVector2Array(-27, -26, 26, -26, 26, -24, -27, -24)
 z_index = 2
 script = ExtResource("1_4flbx")
 
+[node name="LightDimmer" type="Timer" parent="." unique_id=40296860]
+script = ExtResource("2_7thud")
+percentage_to_signal = 0.2
+metadata/_custom_type_script = "uid://e4l1vg2cslja"
+
 [node name="MovementComponent" parent="." unique_id=1526532134 instance=ExtResource("2_qiwj3")]
 
 [node name="FlameSpawnerComponent" type="Node" parent="." unique_id=1271094531 node_paths=PackedStringArray("parent_node", "spawn_at_position")]
@@ -307,6 +314,14 @@ stream = ExtResource("10_wvtmh")
 volume_db = 10.0
 pitch_scale = 0.5
 
+[node name="VulnerableLight" type="PointLight2D" parent="." unique_id=1678073926]
+visible = false
+position = Vector2(0, -19)
+texture = ExtResource("12_a1qjk")
+texture_scale = 0.3
+
+[connection signal="percentage_passed" from="LightDimmer" to="." method="_on_light_dimmer_percentage_passed"]
+[connection signal="timeout" from="LightDimmer" to="." method="_on_light_dimmer_timeout"]
 [connection signal="changed_facing" from="MovementComponent" to="." method="_on_movement_component_changed_facing"]
 [connection signal="changed_state" from="MovementComponent" to="." method="_on_movement_component_changed_state"]
 [connection signal="landed" from="MovementComponent" to="." method="_on_landed"]

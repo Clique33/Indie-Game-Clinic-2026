@@ -1,6 +1,7 @@
 extends Component
 class_name FlameSpawnerComponent
 
+
 @export var parent_node : Node
 @export var spawn_at_position : Marker2D
 

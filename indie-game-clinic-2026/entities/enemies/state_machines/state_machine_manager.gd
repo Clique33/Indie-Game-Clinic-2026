@@ -14,6 +14,8 @@ func _on_state_machine_player_transited(_from: Variant, to: Variant) -> void:
 		"GoingBackToIdle":
 			parent.direction_vector = parent.global_position.direction_to(parent.initial_position)
 			parent.current_speed = parent.back_to_idle_speed
+		"PlayerDead":
+			parent.player.died()
 
 
 func _on_state_machine_player_updated(state: Variant, _delta: Variant) -> void:
@@ -23,4 +25,13 @@ func _on_state_machine_player_updated(state: Variant, _delta: Variant) -> void:
 				parent.global_position = parent.initial_position
 				parent.direction_vector = Vector2.ZERO
 				state_machine_player.set_trigger("back_to_initial_pos")
-			
+		
+		"Attacking":
+			parent.attack_player()
+		
+		"PlayerDead":
+			if abs(parent.player.global_position.distance_to(parent.global_position)) > 10:
+				print("state machine")
+				parent.attack_player()
+			else:
+				parent.stop_movement()

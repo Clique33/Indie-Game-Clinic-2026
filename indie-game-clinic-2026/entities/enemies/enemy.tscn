@@ -175,12 +175,12 @@ _data = {
 radius = 25.019993
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_msovg"]
-radius = 6.0
+radius = 2.236068
 
 [sub_resource type="Resource" id="Resource_nrfwl"]
 script = ExtResource("6_sb13e")
 name = "Entry"
-metadata/graph_offset = Vector2(461, 222.5)
+metadata/graph_offset = Vector2(221, 302.5)
 
 [sub_resource type="Resource" id="Resource_5xow2"]
 script = ExtResource("6_sb13e")
@@ -190,17 +190,12 @@ metadata/graph_offset = Vector2(461, 142.5)
 [sub_resource type="Resource" id="Resource_xmuku"]
 script = ExtResource("6_sb13e")
 name = "RunningAway"
-metadata/graph_offset = Vector2(683, 142.5)
+metadata/graph_offset = Vector2(883, 102.5)
 
 [sub_resource type="Resource" id="Resource_2ggct"]
 script = ExtResource("6_sb13e")
 name = "Attacking"
 metadata/graph_offset = Vector2(697.5, 302.5)
-
-[sub_resource type="Resource" id="Resource_wy1il"]
-script = ExtResource("6_sb13e")
-name = "KeepingDistance"
-metadata/graph_offset = Vector2(433.5, 302.5)
 
 [sub_resource type="Resource" id="Resource_53k0f"]
 script = ExtResource("6_sb13e")
@@ -211,6 +206,16 @@ metadata/graph_offset = Vector2(433.5, -37.5)
 script = ExtResource("6_sb13e")
 name = "PlayerBecameVulnerable"
 metadata/graph_offset = Vector2(147.5, 142.5)
+
+[sub_resource type="Resource" id="Resource_wy1il"]
+script = ExtResource("6_sb13e")
+name = "Stalking"
+metadata/graph_offset = Vector2(461, 302.5)
+
+[sub_resource type="Resource" id="Resource_pbvo2"]
+script = ExtResource("6_sb13e")
+name = "PlayerDead"
+metadata/graph_offset = Vector2(907.5, 302.5)
 
 [sub_resource type="Resource" id="Resource_u01qb"]
 script = ExtResource("7_3udgd")
@@ -239,6 +244,18 @@ from = "Idle"
 to = "PlayerBecameVulnerable"
 conditions = {
 "player_is_dimming": SubResource("Resource_56i32")
+}
+
+[sub_resource type="Resource" id="Resource_rag6w"]
+script = ExtResource("8_vabdn")
+name = "player_is_vulnerable"
+
+[sub_resource type="Resource" id="Resource_tqj2o"]
+script = ExtResource("7_3udgd")
+from = "Idle"
+to = "Attacking"
+conditions = {
+"player_is_vulnerable": SubResource("Resource_rag6w")
 }
 
 [sub_resource type="Resource" id="Resource_ku6gj"]
@@ -289,46 +306,10 @@ conditions = {
 "light_within_range": SubResource("Resource_712qu")
 }
 
-[sub_resource type="Resource" id="Resource_rag6w"]
-script = ExtResource("8_vabdn")
-name = "player_is_vulnerable"
-
-[sub_resource type="Resource" id="Resource_ftsks"]
-script = ExtResource("7_3udgd")
-from = "KeepingDistance"
-to = "Attacking"
-conditions = {
-"player_is_vulnerable": SubResource("Resource_rag6w")
-}
-
-[sub_resource type="Resource" id="Resource_dec5i"]
-script = ExtResource("8_vabdn")
-name = "light_within_range"
-
-[sub_resource type="Resource" id="Resource_0j0it"]
-script = ExtResource("7_3udgd")
-from = "KeepingDistance"
-to = "RunningAway"
-conditions = {
-"light_within_range": SubResource("Resource_dec5i")
-}
-
 [sub_resource type="Resource" id="Resource_lmmiu"]
 script = ExtResource("7_3udgd")
 from = "PlayerBecameVulnerable"
-to = "KeepingDistance"
-
-[sub_resource type="Resource" id="Resource_vkm0h"]
-script = ExtResource("8_vabdn")
-name = "player_is_dimming"
-
-[sub_resource type="Resource" id="Resource_llg7d"]
-script = ExtResource("7_3udgd")
-from = "Attacking"
-to = "KeepingDistance"
-conditions = {
-"player_is_dimming": SubResource("Resource_vkm0h")
-}
+to = "Stalking"
 
 [sub_resource type="Resource" id="Resource_nkaw1"]
 script = ExtResource("8_vabdn")
@@ -342,6 +323,54 @@ conditions = {
 "light_within_range": SubResource("Resource_nkaw1")
 }
 
+[sub_resource type="Resource" id="Resource_vkm0h"]
+script = ExtResource("8_vabdn")
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_llg7d"]
+script = ExtResource("7_3udgd")
+from = "Attacking"
+to = "Stalking"
+conditions = {
+"player_is_dimming": SubResource("Resource_vkm0h")
+}
+
+[sub_resource type="Resource" id="Resource_5ltra"]
+script = ExtResource("8_vabdn")
+name = "player_is_dead"
+
+[sub_resource type="Resource" id="Resource_t287r"]
+script = ExtResource("7_3udgd")
+from = "Attacking"
+to = "PlayerDead"
+conditions = {
+"player_is_dead": SubResource("Resource_5ltra")
+}
+
+[sub_resource type="Resource" id="Resource_atxrh"]
+script = ExtResource("8_vabdn")
+name = "player_is_vulnerable"
+
+[sub_resource type="Resource" id="Resource_ftsks"]
+script = ExtResource("7_3udgd")
+from = "Stalking"
+to = "Attacking"
+conditions = {
+"player_is_vulnerable": SubResource("Resource_atxrh")
+}
+
+[sub_resource type="Resource" id="Resource_dec5i"]
+script = ExtResource("8_vabdn")
+name = "light_within_range"
+
+[sub_resource type="Resource" id="Resource_0j0it"]
+script = ExtResource("7_3udgd")
+from = "Stalking"
+to = "RunningAway"
+conditions = {
+"light_within_range": SubResource("Resource_dec5i")
+}
+
 [sub_resource type="Resource" id="Resource_2k7wq"]
 script = ExtResource("5_56i32")
 states = {
@@ -349,14 +378,16 @@ states = {
 "Entry": SubResource("Resource_nrfwl"),
 "GoingBackToIdle": SubResource("Resource_53k0f"),
 "Idle": SubResource("Resource_5xow2"),
-"KeepingDistance": SubResource("Resource_wy1il"),
 "PlayerBecameVulnerable": SubResource("Resource_gj3y3"),
-"RunningAway": SubResource("Resource_xmuku")
+"PlayerDead": SubResource("Resource_pbvo2"),
+"RunningAway": SubResource("Resource_xmuku"),
+"Stalking": SubResource("Resource_wy1il")
 }
 transitions = {
 "Attacking": {
-"KeepingDistance": SubResource("Resource_llg7d"),
-"RunningAway": SubResource("Resource_6fcqh")
+"PlayerDead": SubResource("Resource_t287r"),
+"RunningAway": SubResource("Resource_6fcqh"),
+"Stalking": SubResource("Resource_llg7d")
 },
 "Entry": {
 "Idle": SubResource("Resource_u01qb")
@@ -367,18 +398,19 @@ transitions = {
 "RunningAway": SubResource("Resource_6ak4d")
 },
 "Idle": {
+"Attacking": SubResource("Resource_tqj2o"),
 "PlayerBecameVulnerable": SubResource("Resource_sb13e"),
 "RunningAway": SubResource("Resource_bjdlj")
 },
-"KeepingDistance": {
-"Attacking": SubResource("Resource_ftsks"),
-"RunningAway": SubResource("Resource_0j0it")
-},
 "PlayerBecameVulnerable": {
-"KeepingDistance": SubResource("Resource_lmmiu")
+"Stalking": SubResource("Resource_lmmiu")
 },
 "RunningAway": {
 "GoingBackToIdle": SubResource("Resource_8edke")
+},
+"Stalking": {
+"Attacking": SubResource("Resource_ftsks"),
+"RunningAway": SubResource("Resource_0j0it")
 }
 }
 

@@ -2,6 +2,13 @@ extends AnimatedSprite2D
 class_name Lamp
 
 
+signal update_scare_area_radius(multiplier : float)
+@warning_ignore("unused_signal")
+signal scare_enemy(lamp : Lamp)
+@warning_ignore("unused_signal")
+signal enemy_is_safe_from(lamp : Lamp)
+
+
 @export var turned_on_energy : float = 1
 @export var time_to_fully_dim : float = 5.0
 @export var time_to_alternate : float = .2
@@ -20,18 +27,18 @@ var _player_in_range : Player = null
 
 func _ready() -> void:
 	play("turned_off")
+	update_scare_area_radius.emit(point_light.texture_scale)
 
 
 func turn_on(from_player : bool = true, _time: float = time_to_alternate) -> void:
-	print("tried turning")
 	if is_turned_on:
 		return
 	if from_player:
-		print("player in range: ",_player_in_range, " can ignite: ", _player_in_range.can_ignite())
 		if not _player_in_range or _player_in_range.can_ignite():
 			return
 	ignite_player.play(0.15)
 	buzzing_player.play()
+	
 	point_light.energy = turned_on_energy
 	flame_sprite.scale = Vector2.ONE
 	play("turned_on"+str(randi_range(0,1)))

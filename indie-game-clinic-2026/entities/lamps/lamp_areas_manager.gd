@@ -1,11 +1,16 @@
 extends Node2D
 class_name LampAreasManager
 
-signal scare_enemy(lamp : Lamp)
-signal enemy_is_safe_from(lamp : Lamp)
+
+@export var scare_area_base_radius : float = 128
 
 
 @onready var lamp : Lamp = get_parent()
+@onready var scare_collision_shape: CollisionShape2D = $ScareArea/CollisionShape2D
+
+
+func _ready() -> void:
+	update_scare_area_radius(1)
 
 
 func _on_iluminable_area_area_entered(area: Area2D) -> void:
@@ -31,10 +36,14 @@ func _on_iluminable_area_area_exited(area: Area2D) -> void:
 func _on_scare_area_body_entered(body: Node2D) -> void:
 	if not body is Enemy:
 		return
-	scare_enemy.emit(lamp)
+	lamp.scare_enemy.emit(lamp)
 
 
 func _on_scare_area_body_exited(body: Node2D) -> void:
 	if not body is Enemy:
 		return
-	enemy_is_safe_from.emit(lamp)
+	lamp.enemy_is_safe_from.emit(lamp)
+
+
+func update_scare_area_radius(multiplier: float) -> void:
+	scare_collision_shape.shape.radius = scare_area_base_radius*multiplier

@@ -19,11 +19,14 @@ signal killed_player
 @onready var lighting: Node2D = $Sprite/Lighting
 @onready var mouth_occluder: LightOccluder2D = $Sprite/Lighting/MouthOccluder
 @onready var hit_box: Area2D = $HitBox
+@onready var state_machine_player: StateMachinePlayer = $StateMachineManager/StateMachinePlayer
 
 
 func _physics_process(_delta: float) -> void:
 	if player:
 		look_to(is_right())
+	velocity = Vector2.RIGHT*100
+	move_and_slide()
 
 
 func _input(event: InputEvent) -> void:
@@ -40,12 +43,12 @@ func is_right() -> bool:
 				) < 90
 
 
-func run_away_from(_danger : Node2D) -> void:
-	push_error("TODO")
+func run_away_from(danger : Lamp) -> void:
+	state_machine_player.set_trigger("light_within_range")
 
 
-func stop_running_away() -> void:
-	push_error("TODO")
+func stop_running_away_from(_danger : Lamp) -> void:
+	state_machine_player.set_trigger("light_out_of_range")
 
 
 func look_to(right : bool) -> void:
@@ -60,17 +63,6 @@ func look_to(right : bool) -> void:
 	sprite.flip_h = right
 
 
-func _on_hit_box_area_entered(area: Area2D) -> void:
-	if area.get_parent() is Flame or area.get_parent() is Lamp:
-		run_away_from(area.get_parent())
-
-
-func _on_hit_box_area_exited(area: Area2D) -> void:
-	if area.get_parent() is Flame or area.get_parent() is Lamp:
-		stop_running_away()
-
-
 func _on_hit_box_body_entered(body: Node2D) -> void:
 	if body is Player:
 		killed_player.emit()
-		print("DEAD")

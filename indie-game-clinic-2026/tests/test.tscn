@@ -1,12 +1,15 @@
 [gd_scene format=3 uid="uid://dg6sve8kidkd3"]
 
+[ext_resource type="Script" uid="uid://bc23uj2qffft4" path="res://tests/test.gd" id="1_jenrn"]
 [ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="1_yggfj"]
 [ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="2_eig8f"]
+[ext_resource type="Script" uid="uid://ctc2tpcd11a54" path="res://tests/enemies.gd" id="4_mm0ke"]
 [ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/bonfire.tscn" id="4_ry45r"]
 [ext_resource type="PackedScene" uid="uid://bpv38cudtipdr" path="res://levels/level.tscn" id="5_dsb46"]
 [ext_resource type="PackedScene" uid="uid://brxra10f281ro" path="res://entities/enemies/enemy.tscn" id="5_uofsi"]
 
 [node name="Test" type="Node2D" unique_id=7882562]
+script = ExtResource("1_jenrn")
 
 [node name="Level" parent="." unique_id=486952134 instance=ExtResource("5_dsb46")]
 self_modulate = Color(0.4506483, 0.4506483, 0.45064825, 1)
@@ -22,31 +25,41 @@ limit_bottom = 1000
 drag_horizontal_enabled = true
 drag_horizontal_offset = 0.1
 
-[node name="Enemy" parent="." unique_id=785337415 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
+[node name="Enemies" type="Node2D" parent="." unique_id=821393978]
+script = ExtResource("4_mm0ke")
+
+[node name="Enemy" parent="Enemies" unique_id=785337415 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
 z_index = 3
-position = Vector2(135.08698, 606.7151)
-player = NodePath("../Player")
+position = Vector2(77.38794, 576.19147)
+player = NodePath("../../Player")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
 energy = 0.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
+visible = false
 color = Color(0, 0, 0, 1)
 
-[node name="Lamp" parent="." unique_id=1421458748 instance=ExtResource("2_eig8f")]
+[node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
+position = Vector2(-9.097015, 124.31)
+
+[node name="Lamps" type="Node2D" parent="." unique_id=1724793873]
+
+[node name="Lamp" parent="Lamps" unique_id=1421458748 instance=ExtResource("2_eig8f")]
 position = Vector2(230.14597, 596.326)
 time_to_fully_dim = 10.0
 time_to_alternate = 1.0
 
-[node name="Lamp2" parent="." unique_id=1076608020 instance=ExtResource("2_eig8f")]
+[node name="Lamp2" parent="Lamps" unique_id=1076608020 instance=ExtResource("2_eig8f")]
 position = Vector2(791.5095, 335.68964)
 time_to_fully_dim = 10.0
 time_to_alternate = 1.0
 
-[node name="Lamp3" parent="." unique_id=1767103788 instance=ExtResource("2_eig8f")]
+[node name="Lamp3" parent="Lamps" unique_id=1767103788 instance=ExtResource("2_eig8f")]
 position = Vector2(594.9641, 197.14418)
 time_to_fully_dim = 10.0
 time_to_alternate = 1.0
 
-[node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]
-position = Vector2(-9.097015, 124.31)
+[connection signal="update_scare_area_radius" from="Lamps/Lamp" to="Lamps/Lamp/AreasManager" method="update_scare_area_radius"]
+[connection signal="update_scare_area_radius" from="Lamps/Lamp2" to="Lamps/Lamp2/AreasManager" method="update_scare_area_radius"]
+[connection signal="update_scare_area_radius" from="Lamps/Lamp3" to="Lamps/Lamp3/AreasManager" method="update_scare_area_radius"]

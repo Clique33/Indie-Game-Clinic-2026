@@ -177,6 +177,8 @@ script = ExtResource("5_402u2")
 
 [node name="ScareArea" type="Area2D" parent="AreasManager" unique_id=1061406730]
 position = Vector2(-0.5, -23)
+collision_layer = 4
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AreasManager/ScareArea" unique_id=596823021]
 position = Vector2(0.5, 5)
@@ -203,7 +205,6 @@ offset = Vector2(0, -3.5)
 position = Vector2(0, 2.5)
 color = Color(1, 0.92266667, 0.71000004, 1)
 energy = 0.0
-shadow_enabled = true
 texture = ExtResource("2_0y5yf")
 texture_scale = 0.75
 

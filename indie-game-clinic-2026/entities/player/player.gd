@@ -69,9 +69,7 @@ func handle_light_lamps() -> void:
 		return
 	
 	if Input.is_action_just_released("turn_on"):
-		for lamp in light_sources_in_range:
-			lamp.turn_on()
-			movement_component.start_turn_on()
+		movement_component.start_turn_on()
 
 
 func handle_shoot_flame() -> void:
@@ -146,6 +144,17 @@ func _on_base_sprite_frame_changed() -> void:
 			match base_sprite.frame:
 				2,7:
 					footsteps_player.play()
+		"turn_on":
+			match base_sprite.frame:
+				3:
+					for lamp in light_sources_in_range:
+						lamp.turn_on()
+
+
+func _on_base_sprite_animation_finished() -> void:
+	match base_sprite.animation:
+		"turn_on":
+			movement_component.end_turn_on()
 
 
 func _on_light_dimmer_timeout() -> void:
@@ -159,9 +168,3 @@ func _on_light_dimmer_percentage_passed(current_percentage: float) -> void:
 	if current_percentage > 0.3:
 		_is_dimming = true
 	flame_sprite.light_radius_scale *= (0.9)
-
-
-func _on_base_sprite_animation_finished() -> void:
-	match base_sprite.animation:
-		"turn_on":
-			movement_component.end_turn_on()

@@ -22,6 +22,7 @@ position = Vector2(48.802, 623.529)
 time_to_fully_dim = 8.0
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
+zoom = Vector2(0.5, 0.5)
 limit_left = -250
 limit_right = 1200
 limit_bottom = 1000
@@ -67,7 +68,7 @@ position = Vector2(35.335815, -26.890564)
 player = NodePath("../../Player")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
-energy = 0.0
+visible = false
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
 visible = false
@@ -80,20 +81,21 @@ scale = Vector2(2, 2)
 [node name="Lamps" type="Node2D" parent="." unique_id=1724793873]
 
 [node name="Lamp" parent="Lamps" unique_id=1421458748 instance=ExtResource("2_eig8f")]
-position = Vector2(230.14597, 596.326)
+position = Vector2(230.146, 607.326)
 time_to_fully_dim = 10.0
 time_to_alternate = 1.0
 
 [node name="Lamp2" parent="Lamps" unique_id=1076608020 instance=ExtResource("2_eig8f")]
-position = Vector2(791.5095, 335.68964)
+position = Vector2(791.51, 371.69)
 time_to_fully_dim = 10.0
 time_to_alternate = 1.0
 
 [node name="Lamp3" parent="Lamps" unique_id=1767103788 instance=ExtResource("2_eig8f")]
-position = Vector2(594.9641, 197.14418)
+position = Vector2(594.9641, 241.14418)
 time_to_fully_dim = 10.0
 time_to_alternate = 1.0
 
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
 [connection signal="player_fell" from="Level" to="." method="_on_reload_timer_timeout"]
 [connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[connection signal="bonfire_lit" from="Bonfire" to="." method="_on_bonfire_bonfire_lit"]

@@ -2,10 +2,8 @@ extends AnimatedSprite2D
 class_name Lamp
 
 
-signal update_scare_area_radius(multiplier : float)
 signal turned_on
 signal turned_off
-signal player_is_safe
 
 
 @export var turned_on_energy : float = 1
@@ -29,11 +27,12 @@ var player_in_range : Player = null
 @onready var light_dimmer: LightDimmer = $LightDimmer
 @onready var ignite_player: AudioStreamPlayer2D = $SoundEffects/IgnitePlayer
 @onready var buzzing_player: AudioStreamPlayer2D = $SoundEffects/BuzzingPlayer
+@onready var areas_manager: LampAreasManager = $AreasManager
 
 
 func _ready() -> void:
 	play("turned_off")
-	update_scare_area_radius.emit(point_light.texture_scale)
+	areas_manager.update_scare_area_radius(point_light.texture_scale)
 
 
 func turn_on(from_player : bool = true, _time: float = time_to_alternate) -> void:
@@ -79,6 +78,7 @@ func scare_enemies_in_range() -> void:
 
 func free_enemies_in_range() -> void:
 	for enemy : Enemy in enemies_in_range:
+		print(enemy)
 		enemy.stop_running_away_from(self)
 
 

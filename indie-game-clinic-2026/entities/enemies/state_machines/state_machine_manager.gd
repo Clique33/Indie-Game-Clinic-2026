@@ -1,9 +1,13 @@
 extends Node
 
 
+@export var await_to_attack_time : float = 1.5
+
+
 var current_state : String
 
 
+@onready var wait_to_attack_timer: Timer = $WaitToAttackTimer
 @onready var state_machine_player: StateMachinePlayer = $StateMachinePlayer
 @onready var parent : Enemy = get_parent()
 
@@ -11,29 +15,25 @@ var current_state : String
 func _on_state_machine_player_transited(_from: Variant, to: Variant) -> void:
 	current_state = to
 	match to:
-		"GoingBackToIdle":
-			parent.direction_vector = parent.global_position.direction_to(parent.initial_position)
-			parent.current_speed = parent.back_to_idle_speed
+		"Attacking":
+			wait_to_attack_timer.start(await_to_attack_time)
 		"PlayerDead":
 			parent.player.died()
 
 
 func _on_state_machine_player_updated(state: Variant, _delta: Variant) -> void:
 	match state:
+		
 		"GoingBackToIdle":
-			if abs(parent.global_position.distance_to(parent.initial_position)) < 10:
-				parent.global_position = parent.initial_position
-				parent.direction_vector = Vector2.ZERO
-				state_machine_player.set_trigger("back_to_initial_pos")
+			parent.idle_away_from_player()
 	
 		"Stalking":
 			parent.stalk_player()
 		
 		"Attacking":
+			if not wait_to_attack_timer.is_stopped():
+				return
 			parent.attack_player()
 		
 		"PlayerDead":
-			if abs(parent.player.global_position.distance_to(parent.global_position)) > 10:
-				parent.attack_player()
-			else:
-				parent.stop_movement()
+			parent.stop_movement()

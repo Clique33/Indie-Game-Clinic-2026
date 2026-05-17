@@ -176,7 +176,7 @@ _data = {
 radius = 25.019993
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_msovg"]
-radius = 2.236068
+radius = 9.0
 
 [sub_resource type="Resource" id="Resource_nrfwl"]
 script = ExtResource("6_sb13e")
@@ -256,6 +256,19 @@ conditions = {
 "player_is_dimming": SubResource("Resource_3udgd")
 }
 
+[sub_resource type="Resource" id="Resource_oqe2d"]
+script = ExtResource("10_3udgd")
+value = true
+name = "player_is_close"
+
+[sub_resource type="Resource" id="Resource_mhv8b"]
+script = ExtResource("7_3udgd")
+from = "Idle"
+to = "GoingBackToIdle"
+conditions = {
+"player_is_close": SubResource("Resource_oqe2d")
+}
+
 [sub_resource type="Resource" id="Resource_ku6gj"]
 script = ExtResource("8_vabdn")
 name = "light_out_of_range"
@@ -272,12 +285,17 @@ conditions = {
 script = ExtResource("8_vabdn")
 name = "back_to_initial_pos"
 
+[sub_resource type="Resource" id="Resource_3b5sx"]
+script = ExtResource("10_3udgd")
+name = "player_is_close"
+
 [sub_resource type="Resource" id="Resource_21xsh"]
 script = ExtResource("7_3udgd")
 from = "GoingBackToIdle"
 to = "Idle"
 conditions = {
-"back_to_initial_pos": SubResource("Resource_y4tt3")
+"back_to_initial_pos": SubResource("Resource_y4tt3"),
+"player_is_close": SubResource("Resource_3b5sx")
 }
 
 [sub_resource type="Resource" id="Resource_712qu"]
@@ -354,14 +372,14 @@ conditions = {
 "player_is_vulnerable": SubResource("Resource_1lk5u")
 }
 
+[sub_resource type="Resource" id="Resource_0uqau"]
+script = ExtResource("10_3udgd")
+name = "player_is_safe"
+
 [sub_resource type="Resource" id="Resource_ct7fg"]
 script = ExtResource("10_3udgd")
 value = true
 name = "player_is_vulnerable"
-
-[sub_resource type="Resource" id="Resource_0uqau"]
-script = ExtResource("10_3udgd")
-name = "player_is_safe"
 
 [sub_resource type="Resource" id="Resource_ftsks"]
 script = ExtResource("7_3udgd")
@@ -424,6 +442,7 @@ transitions = {
 },
 "Idle": {
 "Attacking": SubResource("Resource_tqj2o"),
+"GoingBackToIdle": SubResource("Resource_mhv8b"),
 "RunningAway": SubResource("Resource_bjdlj"),
 "Stalking": SubResource("Resource_vabdn")
 },
@@ -472,6 +491,7 @@ texture = ExtResource("3_msovg")
 texture_scale = 0.04
 
 [node name="MouthOccluder" type="LightOccluder2D" parent="Sprite/Lighting" unique_id=2128694244]
+visible = false
 position = Vector2(2, 11)
 occluder = SubResource("OccluderPolygon2D_5lf1o")
 
@@ -572,6 +592,9 @@ script = ExtResource("4_56i32")
 script = ExtResource("4_gj3y3")
 state_machine = SubResource("Resource_2k7wq")
 metadata/_custom_type_script = "uid://byk1ah113xskx"
+
+[node name="WaitToAttackTimer" type="Timer" parent="StateMachineManager" unique_id=2000820496]
+one_shot = true
 
 [node name="Debug" type="Control" parent="." unique_id=1019029088]
 layout_mode = 3

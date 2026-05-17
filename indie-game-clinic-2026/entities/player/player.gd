@@ -2,13 +2,10 @@ extends CharacterBody2D
 class_name Player
 
 
-signal player_is_vulnerable
-signal player_is_dimming
 signal player_died
 
 
 @export var time_to_fully_dim : float = 15
-@export var time_till_get_attacked : float = 1.5
 
 
 var flame_sprite: Flame:
@@ -16,7 +13,8 @@ var flame_sprite: Flame:
 		flame_sprite = value
 		if not flame_sprite:
 			vulnerable_light.visible = true
-			get_tree().create_timer(time_till_get_attacked).timeout.connect(_await_to_be_vulnerable)
+			print("got vulnerable")
+			_is_vulnerable = true
 		else:
 			vulnerable_light.visible = false
 			_is_vulnerable = false
@@ -56,8 +54,6 @@ func _physics_process(_delta: float) -> void:
 	if _is_dead:
 		return
 	_is_safe = are_there_any_light_sources_lit()
-	if _is_vulnerable and not _is_safe:
-		player_is_vulnerable.emit()
 	handle_light_lamps()
 	handle_shoot_flame()
 	handle_spawn_flame()
@@ -161,8 +157,4 @@ func _on_light_dimmer_percentage_passed(current_percentage: float) -> void:
 		return
 	if current_percentage > 0.3:
 		_is_dimming = true
-	flame_sprite.light_radius_scale *= (1-light_dimmer.percentage_to_signal)
-
-
-func _await_to_be_vulnerable() -> void:
-	_is_vulnerable = true
+	flame_sprite.light_radius_scale *= (0.9)

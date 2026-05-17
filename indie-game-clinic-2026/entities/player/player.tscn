@@ -317,7 +317,7 @@ pitch_scale = 0.5
 visible = false
 position = Vector2(0, -19)
 texture = ExtResource("12_a1qjk")
-texture_scale = 0.3
+texture_scale = 0.5
 
 [connection signal="percentage_passed" from="LightDimmer" to="." method="_on_light_dimmer_percentage_passed"]
 [connection signal="timeout" from="LightDimmer" to="." method="_on_light_dimmer_timeout"]

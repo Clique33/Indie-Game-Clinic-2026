@@ -69,10 +69,19 @@ func end_turn_on() -> void:
 
 
 func handle_jump() -> void:
-	if Input.is_action_just_pressed("jump") and entity.is_on_floor():
-		entity.velocity.y = jump_velocity
-		entity.velocity.x *= 1.25
-		_on_air = true
+	if not entity.is_on_floor():
+		return
+	if Input.is_action_just_pressed("jump"):
+		if Input.is_action_pressed("go_down"):
+			_on_air = true
+			var temp = entity.collision_mask
+			entity.collision_mask = 0
+			await get_tree().create_timer(0.2).timeout
+			entity.collision_mask = temp
+		else:
+			entity.velocity.y = jump_velocity
+			entity.velocity.x *= 1.25
+			_on_air = true
 
 
 func handle_gravity(delta : float) -> void:

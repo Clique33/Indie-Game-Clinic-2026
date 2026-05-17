@@ -12,6 +12,8 @@
 [ext_resource type="Script" uid="uid://byvvdvximqxhm" path="res://addons/imjp94.yafsm/src/conditions/BooleanCondition.gd" id="10_3udgd"]
 [ext_resource type="Script" uid="uid://dj7ds338g1c73" path="res://entities/enemies/debug.gd" id="10_sb13e"]
 [ext_resource type="AudioStream" uid="uid://djhc08ns43rvm" path="res://assets/sfx/enemy_death2.wav" id="12_vabdn"]
+[ext_resource type="AudioStream" uid="uid://b2d3xjgf1ylvt" path="res://assets/sfx/enemy_laugh.wav" id="13_nrfwl"]
+[ext_resource type="AudioStream" uid="uid://dkdlrlnfn0xxp" path="res://assets/sfx/enemy_attack.wav" id="14_5xow2"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twyc1"]
 atlas = ExtResource("2_5lf1o")
@@ -610,6 +612,7 @@ metadata/_custom_type_script = "uid://byk1ah113xskx"
 one_shot = true
 
 [node name="Debug" type="Control" parent="." unique_id=1019029088]
+visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -637,6 +640,17 @@ text = "State : "
 [node name="DeathPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1908166066]
 stream = ExtResource("12_vabdn")
 attenuation = 2.4622886
+
+[node name="LaughPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1809271850]
+stream = ExtResource("13_nrfwl")
+pitch_scale = 2.0
+attenuation = 1.7411014
+
+[node name="AttackPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1725480135]
+stream = ExtResource("14_5xow2")
+volume_db = -2.5
+pitch_scale = 1.6
+attenuation = 1.7411014
 
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="transited" from="StateMachineManager/StateMachinePlayer" to="StateMachineManager" method="_on_state_machine_player_transited"]

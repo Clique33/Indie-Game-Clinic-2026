@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://23fxqrct03ny"]
+
+[ext_resource type="Script" uid="uid://dduii756rdjlq" path="res://menus/initial_scene.gd" id="1_lfc8h"]
+
+[node name="InitialScene" type="ColorRect" unique_id=1121563263]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("1_lfc8h")

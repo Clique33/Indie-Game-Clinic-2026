@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://bdud5xvf3keil"]
+
+[ext_resource type="Script" uid="uid://bc23uj2qffft4" path="res://tests/main.gd" id="1_jn3m2"]
+[ext_resource type="PackedScene" uid="uid://c66f1ht51337j" path="res://levels/level.tscn" id="2_lrp2o"]
+[ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="3_iiot3"]
+[ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/lamps/bonfire.tscn" id="4_2nm31"]
+[ext_resource type="AudioStream" uid="uid://cr5ulj8bggkh1" path="res://assets/music/dragon-studio-halloween-creepy-basement-511329.mp3" id="5_qta58"]
+
+[node name="Main" type="Node2D" unique_id=7882562]
+script = ExtResource("1_jn3m2")
+level = ExtResource("2_lrp2o")
+
+[node name="ReloadTimer" type="Timer" parent="." unique_id=336036807]
+
+[node name="Player" parent="." unique_id=1459404749 instance=ExtResource("3_iiot3")]
+position = Vector2(28.386292, 1013.64685)
+time_to_fully_dim = 9.0
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=326535728]
+limit_left = -500
+limit_top = -1000
+limit_right = 2000
+limit_bottom = 1300
+drag_horizontal_enabled = true
+drag_horizontal_offset = 0.1
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]
+visible = false
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
+visible = false
+color = Color(0, 0, 0, 1)
+
+[node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_2nm31")]
+position = Vector2(-198, -2)
+scale = Vector2(2, 2)
+
+[node name="AmbiencePlayer" type="AudioStreamPlayer" parent="." unique_id=717595678]
+stream = ExtResource("5_qta58")
+volume_db = -13.5
+autoplay = true
+parameters/looping = true
+
+[connection signal="timeout" from="ReloadTimer" to="." method="_on_reload_timer_timeout"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
+[connection signal="bonfire_lit" from="Bonfire" to="." method="_on_bonfire_bonfire_lit"]

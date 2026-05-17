@@ -41,6 +41,8 @@ var _is_dead : bool = false
 @onready var right_eye: PointLight2D = $Sprite/Lighting/RightEyeOccluder/RightEye
 @onready var left_eye: PointLight2D = $Sprite/Lighting/LeftEyeOccluder/LeftEye
 @onready var death_player: AudioStreamPlayer2D = $DeathPlayer
+@onready var laugh_player: AudioStreamPlayer2D = $LaughPlayer
+@onready var attack_audio_player: AudioStreamPlayer2D = $AttackPlayer
 
 
 func _ready() -> void:
@@ -52,8 +54,6 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _is_dead:
 		return
-	if Input.is_action_just_released("ui_cancel"):
-		die()
 	if player:
 		distance_to_player = abs(global_position.distance_to(player.global_position))
 		transition_state_machine()
@@ -161,7 +161,7 @@ func transition_state_machine() -> void:
 	state_machine_player.set_param("player_is_safe",player._is_safe)
 	state_machine_player.set_param("player_is_dimming",player._is_dimming)
 	state_machine_player.set_param("player_is_close",player_is_close())
-	print(state_machine_player.get_params())
+	#print(state_machine_player.get_params())
 
 
 func _on_hit_box_body_entered(body: Node2D) -> void:

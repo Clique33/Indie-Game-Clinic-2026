@@ -13,7 +13,6 @@ var flame_sprite: Flame:
 		flame_sprite = value
 		if not flame_sprite:
 			vulnerable_light.visible = true
-			print("got vulnerable")
 			_is_vulnerable = true
 		else:
 			vulnerable_light.visible = false
@@ -44,7 +43,7 @@ func _ready() -> void:
 	if has_node("FlameSprite"):
 		flame_sprite = get_node("FlameSprite")
 	else:
-		flame_sprite = flame_spawner_component.spawn_flame(1.5,Color.WHITE)
+		flame_sprite = flame_spawner_component.spawn_flame(2,Color.WHITE)
 		if flame_sprite:
 			light_dimmer.start(time_to_fully_dim)
 
@@ -60,9 +59,12 @@ func _physics_process(_delta: float) -> void:
 
 
 func died():
+	if _is_dead:
+		return
 	_is_dead = true
 	movement_component.enabled = false
-	player_died.emit()
+	z_index = 10
+	base_sprite.play("die")
 	
 func handle_light_lamps() -> void:
 	if light_sources_in_range.is_empty():
@@ -88,7 +90,7 @@ func handle_spawn_flame() -> void:
 	if Input.is_action_just_released("turn_on"):
 		if not _is_safe:
 			return
-		flame_sprite = flame_spawner_component.spawn_flame(1.5)
+		flame_sprite = flame_spawner_component.spawn_flame(2)
 
 
 func are_there_any_light_sources_lit() -> bool:
@@ -123,8 +125,8 @@ func _on_landed() -> void:
 	land_player.play(0.08)
 
 
-func _on_movement_component_changed_state(name: MovementComponent.PossibleStates) -> void:
-	match name:
+func _on_movement_component_changed_state(_name: MovementComponent.PossibleStates) -> void:
+	match _name:
 		MovementComponent.PossibleStates.IDLE:
 			base_sprite.play("idle")
 		MovementComponent.PossibleStates.WALKING:
@@ -139,6 +141,8 @@ func _on_movement_component_changed_state(name: MovementComponent.PossibleStates
 
 
 func _on_base_sprite_frame_changed() -> void:
+	if not base_sprite:
+		return 
 	match base_sprite.animation:
 		"walk":
 			match base_sprite.frame:
@@ -155,9 +159,13 @@ func _on_base_sprite_animation_finished() -> void:
 	match base_sprite.animation:
 		"turn_on":
 			movement_component.end_turn_on()
+		"die":
+			player_died.emit()
 
 
 func _on_light_dimmer_timeout() -> void:
+	if not flame_sprite:
+		return
 	flame_sprite.queue_free()
 	flame_sprite = null
 

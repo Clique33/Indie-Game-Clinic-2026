@@ -13,6 +13,14 @@ signal killed_player
 
 
 @export var player : Player
+@export var back_to_idle_speed : float = 200
+@export var attack_speed : float = 200
+@export var run_away_speed : float = 200
+
+
+var initial_position : Vector2
+var direction_vector : Vector2
+var current_speed : float
 
 
 @onready var sprite: AnimatedSprite2D = $Sprite
@@ -22,10 +30,16 @@ signal killed_player
 @onready var state_machine_player: StateMachinePlayer = $StateMachineManager/StateMachinePlayer
 
 
+func _ready() -> void:
+	initial_position = global_position
+	direction_vector = Vector2.ZERO
+	current_speed = back_to_idle_speed
+
+
 func _physics_process(_delta: float) -> void:
 	if player:
 		look_to(is_right())
-	velocity = Vector2.RIGHT*100
+	velocity = direction_vector*current_speed
 	move_and_slide()
 
 
@@ -45,6 +59,8 @@ func is_right() -> bool:
 
 func run_away_from(danger : Lamp) -> void:
 	state_machine_player.set_trigger("light_within_range")
+	direction_vector = danger.global_position.direction_to(global_position)
+	current_speed = run_away_speed
 
 
 func stop_running_away_from(_danger : Lamp) -> void:

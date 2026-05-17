@@ -277,6 +277,18 @@ conditions = {
 "player_is_dimming": SubResource("Resource_3udgd")
 }
 
+[sub_resource type="Resource" id="Resource_712qu"]
+script = ExtResource("8_vabdn")
+name = "light_within_range"
+
+[sub_resource type="Resource" id="Resource_6ak4d"]
+script = ExtResource("7_3udgd")
+from = "GoingBackToIdle"
+to = "RunningAway"
+conditions = {
+"light_within_range": SubResource("Resource_712qu")
+}
+
 [sub_resource type="Resource" id="Resource_rag6w"]
 script = ExtResource("8_vabdn")
 name = "player_is_vulnerable"
@@ -351,7 +363,8 @@ transitions = {
 },
 "GoingBackToIdle": {
 "Idle": SubResource("Resource_21xsh"),
-"PlayerBecameVulnerable": SubResource("Resource_vabdn")
+"PlayerBecameVulnerable": SubResource("Resource_vabdn"),
+"RunningAway": SubResource("Resource_6ak4d")
 },
 "Idle": {
 "PlayerBecameVulnerable": SubResource("Resource_sb13e"),

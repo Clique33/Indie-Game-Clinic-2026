@@ -22,8 +22,11 @@ func _on_iluminable_area_area_entered(area: Area2D) -> void:
 				not lamp.is_turned_on):
 		lamp.turn_on(false)
 	
-	if area.get_parent() is Player and (area.get_parent() as Player).can_ignite:
-		lamp.player_in_range = area.get_parent() as Player
+	if area.get_parent() is Player:
+		if lamp.is_turned_on:
+			(area.get_parent() as Player)._is_vulnerable = false
+		if (area.get_parent() as Player).can_ignite:
+			lamp.player_in_range = area.get_parent() as Player
 
 
 func _on_iluminable_area_area_exited(area: Area2D) -> void:

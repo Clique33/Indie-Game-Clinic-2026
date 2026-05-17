@@ -7,6 +7,7 @@ signal player_is_dimming
 
 
 @export var time_to_fully_dim : float = 15
+@export var time_till_get_attacked : float = 1.5
 
 
 var flame_sprite: Flame:
@@ -14,10 +15,13 @@ var flame_sprite: Flame:
 		flame_sprite = value
 		if not flame_sprite:
 			vulnerable_light.visible = true
+			get_tree().create_timer(time_till_get_attacked).timeout.connect(_await_to_be_vulnerable)
 		else:
 			vulnerable_light.visible = false
+			_is_vulnerable = false
 var light_sources_in_range : Array[Lamp] = []
 var _is_dead : bool = false
+var _is_vulnerable : bool = false
 
 
 @onready var vulnerable_light: PointLight2D = $VulnerableLight
@@ -44,11 +48,11 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _is_dead:
 		return
+	if _is_vulnerable:
+		player_is_vulnerable.emit()
 	handle_light_lamps()
 	handle_shoot_flame()
 	handle_spawn_flame()
-	if not flame_sprite:
-		player_is_vulnerable.emit()
 
 
 func died():
@@ -150,6 +154,10 @@ func _on_light_dimmer_timeout() -> void:
 func _on_light_dimmer_percentage_passed(current_percentage: float) -> void:
 	if not flame_sprite:
 		return
-	if current_percentage > 0.5:
+	if current_percentage > 0.3:
 		player_is_dimming.emit()
 	flame_sprite.light_radius_scale *= (1-light_dimmer.percentage_to_signal)
+
+
+func _await_to_be_vulnerable() -> void:
+	_is_vulnerable = true

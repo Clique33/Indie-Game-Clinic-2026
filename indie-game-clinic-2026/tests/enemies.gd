@@ -12,4 +12,4 @@ func _ready() -> void:
 func connect_lamps_to_enemies() -> void:
 	for enemy : Enemy in get_children():
 		player.player_is_vulnerable.connect(enemy.player_is_vulnerable)
-		player.player_is_dimming.connect(enemy.stalk_player)
+		player.player_is_dimming.connect(enemy.player_is_dimming)

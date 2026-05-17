@@ -18,7 +18,8 @@ signal killed_player
 @export var attack_speed : float = 400
 @export var run_away_speed : float = 200
 @export var stalk_speed : float = 200
-@export var stalk_distance : float = 100
+@export var stalk_max_distance_to_player : float = 200
+@export var stalk_max_distance : float = 400
 
 
 var initial_position : Vector2
@@ -64,6 +65,10 @@ func player_is_vulnerable() -> void:
 	state_machine_player.set_trigger("player_is_vulnerable")
 
 
+func player_is_dimming() -> void:
+	state_machine_player.set_trigger("player_is_dimming")
+
+
 func run_away_from(danger : Lamp) -> void:
 	state_machine_player.set_trigger("light_within_range")
 	direction_vector = danger.global_position.direction_to(global_position)
@@ -81,7 +86,14 @@ func attack_player() -> void:
 
 
 func stalk_player() -> void:
-	state_machine_player.set_trigger("player_is_dimming")
+	var distance_to_player : float = abs(global_position.distance_to(player.global_position))
+	if distance_to_player > stalk_max_distance:
+		return
+	if distance_to_player > stalk_max_distance_to_player:
+		current_speed = stalk_speed
+	else:
+		current_speed = 0
+	direction_vector = global_position.direction_to(player.global_position)
 
 
 func stop_movement() -> void:

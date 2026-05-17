@@ -3,6 +3,8 @@ class_name Lamp
 
 
 signal update_scare_area_radius(multiplier : float)
+signal turned_on
+signal turned_off
 
 
 @export var turned_on_energy : float = 1
@@ -12,7 +14,13 @@ signal update_scare_area_radius(multiplier : float)
 
 var enemies_in_range : Array[Enemy] = []
 var _elapsed_time_since_turned_on : float
-var is_turned_on : bool = false
+var is_turned_on : bool = false:
+	set(value):
+		is_turned_on = value
+		if is_turned_on:
+			turned_on.emit()
+		else:
+			turned_off.emit()
 var player_in_range : Player = null
 
 @onready var flame_sprite: AnimatedSprite2D = $FlameSprite

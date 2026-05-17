@@ -417,7 +417,13 @@ transitions = {
 [node name="Enemy" type="CharacterBody2D" unique_id=785337415]
 collision_layer = 4
 collision_mask = 4
+motion_mode = 1
 script = ExtResource("1_owq46")
+back_to_idle_speed = null
+attack_speed = null
+run_away_speed = null
+stalk_speed = null
+stalk_distance = null
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=370643102]
 self_modulate = Color(0.14044744, 0.14044744, 0.14044744, 1)

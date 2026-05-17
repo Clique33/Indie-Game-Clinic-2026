@@ -87,7 +87,6 @@ visible = false
 position = Vector2(0, -22)
 color = Color(1, 0.85490197, 0.6392157, 1)
 energy = 3.0
-shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 5.0
 texture = ExtResource("5_xxhm5")

@@ -25,6 +25,9 @@ func _on_state_machine_player_updated(state: Variant, _delta: Variant) -> void:
 				parent.global_position = parent.initial_position
 				parent.direction_vector = Vector2.ZERO
 				state_machine_player.set_trigger("back_to_initial_pos")
+	
+		"Stalking":
+			parent.stalk_player()
 		
 		"Attacking":
 			parent.attack_player()

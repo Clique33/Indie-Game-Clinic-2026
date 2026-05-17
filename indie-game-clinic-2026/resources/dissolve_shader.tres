@@ -1,0 +1,13 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dsk1ktabdq4vd"]
+
+[ext_resource type="Shader" uid="uid://cvy1cca1v20ys" path="res://resources/enemy.tres" id="1_6gt8c"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_csktu"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nmp15"]
+noise = SubResource("FastNoiseLite_csktu")
+
+[resource]
+shader = ExtResource("1_6gt8c")
+shader_parameter/Noise = SubResource("NoiseTexture2D_nmp15")
+shader_parameter/DissolverValue = 1.0

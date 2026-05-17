@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bn8cattr3rwi"]
 
 [ext_resource type="Texture2D" uid="uid://bupi4ajconhgj" path="res://assets/art/Pixel Flame Spritesheet.png" id="1_2k88y"]
-[ext_resource type="Script" uid="uid://b53moy18vbiqv" path="res://entities/flame.gd" id="1_x0l46"]
+[ext_resource type="Script" uid="uid://b53moy18vbiqv" path="res://entities/lamps/flame.gd" id="1_x0l46"]
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="2_x0l46"]
 [ext_resource type="AudioStream" uid="uid://ctug22h5rvyy4" path="res://assets/sfx/player_flame_flicker.mp3" id="3_5vhgi"]
 

@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://oxedx27kcpf3" path="res://assets/art/player/land.png" id="6_8fjmc"]
 [ext_resource type="Texture2D" uid="uid://d1cjpbri6yop3" path="res://assets/art/player/walk.png" id="7_qiwj3"]
 [ext_resource type="AudioStream" uid="uid://d248ns60a2hvr" path="res://assets/sfx/gabriel/steps.wav" id="8_26q78"]
+[ext_resource type="Texture2D" uid="uid://cjp33mix56bwi" path="res://assets/art/player/ataque.png" id="8_j3ovn"]
 [ext_resource type="AudioStream" uid="uid://cu01gjucxuj3g" path="res://assets/sfx/gabriel/jump.wav" id="9_bectd"]
 [ext_resource type="AudioStream" uid="uid://bdb84q7sy1lng" path="res://assets/sfx/gabriel/land.wav" id="10_wvtmh"]
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="12_a1qjk"]
@@ -72,6 +73,26 @@ region = Rect2(64, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_mtric"]
 atlas = ExtResource("5_8fjmc")
 region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_221hk"]
+atlas = ExtResource("8_j3ovn")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vewsg"]
+atlas = ExtResource("8_j3ovn")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2soq1"]
+atlas = ExtResource("8_j3ovn")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8q4fm"]
+atlas = ExtResource("8_j3ovn")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_np63p"]
+atlas = ExtResource("8_j3ovn")
+region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2kln"]
 atlas = ExtResource("7_qiwj3")
@@ -177,6 +198,32 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": SubResource("AtlasTexture_221hk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vewsg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2soq1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8q4fm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_np63p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2soq1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vewsg")
+}],
+"loop": false,
+"name": &"turn_on",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": SubResource("AtlasTexture_b2kln")
 }, {
 "duration": 1.0,
@@ -245,8 +292,9 @@ self_modulate = Color(0.50140685, 0.5014064, 0.5014066, 1)
 texture_filter = 1
 position = Vector2(0, -29)
 sprite_frames = SubResource("SpriteFrames_b2kln")
-animation = &"walk"
+animation = &"idle"
 autoplay = "idle"
+frame_progress = 0.50491077
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1690655228]
 position = Vector2(-0.5, -11.5)
@@ -280,17 +328,10 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="CanIgniteLabel" type="Label" parent="Debug/VBoxContainer" unique_id=1502469763]
+[node name="StateLabel" type="Label" parent="Debug/VBoxContainer" unique_id=1502469763]
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
 text = "can ignite? "
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="IsLightSourceInRangeLabel" type="Label" parent="Debug/VBoxContainer" unique_id=1442418101]
-layout_mode = 2
-theme_override_font_sizes/font_size = 14
-text = "light sources: "
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -324,6 +365,7 @@ texture_scale = 0.5
 [connection signal="changed_facing" from="MovementComponent" to="." method="_on_movement_component_changed_facing"]
 [connection signal="changed_state" from="MovementComponent" to="." method="_on_movement_component_changed_state"]
 [connection signal="landed" from="MovementComponent" to="." method="_on_landed"]
+[connection signal="animation_finished" from="BaseSprite" to="." method="_on_base_sprite_animation_finished"]
 [connection signal="frame_changed" from="BaseSprite" to="." method="_on_base_sprite_frame_changed"]
 [connection signal="area_entered" from="CanBeIluminatedArea" to="." method="_on_can_be_iluminated_area_area_entered"]
 [connection signal="area_exited" from="CanBeIluminatedArea" to="." method="_on_can_be_iluminated_area_area_exited"]

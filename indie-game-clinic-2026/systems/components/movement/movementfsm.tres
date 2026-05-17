@@ -33,7 +33,7 @@ name = "OnAir"
 metadata/graph_offset = Vector2(701, 942.5)
 
 [sub_resource type="Resource" id="Resource_6d8gp"]
-script = ExtResource("1_8sxjm")
+script = ExtResource("2_l7gdk")
 name = "TurningOn"
 metadata/graph_offset = Vector2(553.5, 1242.5)
 

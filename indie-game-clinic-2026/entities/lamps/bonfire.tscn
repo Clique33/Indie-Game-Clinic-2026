@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://dw7cqsunjxc61" path="res://assets/art/candles/bonfire/bonfire_turned_off.png" id="1_xxhm5"]
 [ext_resource type="Texture2D" uid="uid://dw6x36oktnmb2" path="res://assets/art/candles/bonfire/bonfire_turned_on.png" id="2_4ieov"]
-[ext_resource type="Script" uid="uid://bos5nicdffa18" path="res://entities/bonfire.gd" id="2_lftts"]
+[ext_resource type="Script" uid="uid://bos5nicdffa18" path="res://entities/lamps/bonfire.gd" id="2_lftts"]
 [ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="4_lftts"]
 [ext_resource type="Texture2D" uid="uid://b0gsv0wcf37ir" path="res://assets/neutral_point_light.webp" id="5_xxhm5"]
 

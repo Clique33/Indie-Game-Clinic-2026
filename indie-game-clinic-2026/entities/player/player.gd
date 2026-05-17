@@ -33,8 +33,7 @@ var _is_dimming : bool = false
 @onready var base_sprite: AnimatedSprite2D = $BaseSprite
 @onready var movement_component: MovementComponent = $MovementComponent
 @onready var flame_spawner_component: FlameSpawnerComponent = $FlameSpawnerComponent
-@onready var can_ignite_label: Label = $Debug/VBoxContainer/CanIgniteLabel
-@onready var is_light_source_in_range_label: Label = $Debug/VBoxContainer/IsLightSourceInRangeLabel
+@onready var state_label: Label = $Debug/VBoxContainer/StateLabel
 @onready var footsteps_player: AudioStreamPlayer2D = $SfxPlayers/FootstepsPlayer
 @onready var jump_player: AudioStreamPlayer2D = $SfxPlayers/JumpPlayer
 @onready var land_player: AudioStreamPlayer2D = $SfxPlayers/LandPlayer
@@ -53,6 +52,7 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _is_dead:
 		return
+	state_label.text = "State: " + movement_component.current_state
 	_is_safe = are_there_any_light_sources_lit()
 	handle_light_lamps()
 	handle_shoot_flame()
@@ -71,6 +71,7 @@ func handle_light_lamps() -> void:
 	if Input.is_action_just_released("turn_on"):
 		for lamp in light_sources_in_range:
 			lamp.turn_on()
+			movement_component.start_turn_on()
 
 
 func handle_shoot_flame() -> void:
@@ -106,13 +107,11 @@ func can_ignite() -> bool:
 func _on_can_be_iluminated_area_area_entered(area: Area2D) -> void:
 	if area.name == "IluminableArea":
 		light_sources_in_range.append(area.get_parent().lamp)
-	is_light_source_in_range_label.text = "light sources: " + str(light_sources_in_range)
 
 
 func _on_can_be_iluminated_area_area_exited(area: Area2D) -> void:
 	if area.get_parent() is LampAreasManager:
 		light_sources_in_range.erase((area.get_parent() as LampAreasManager).lamp)
-	is_light_source_in_range_label.text = "light sources: " + str(light_sources_in_range) 
 
 
 func _on_movement_component_changed_facing(left: bool) -> void:
@@ -126,8 +125,8 @@ func _on_landed() -> void:
 	land_player.play(0.08)
 
 
-func _on_movement_component_changed_state(_name: MovementComponent.PossibleStates) -> void:
-	match _name:
+func _on_movement_component_changed_state(name: MovementComponent.PossibleStates) -> void:
+	match name:
 		MovementComponent.PossibleStates.IDLE:
 			base_sprite.play("idle")
 		MovementComponent.PossibleStates.WALKING:
@@ -137,6 +136,8 @@ func _on_movement_component_changed_state(_name: MovementComponent.PossibleState
 			jump_player.play(0.3)
 		MovementComponent.PossibleStates.GOING_DOWN:
 			base_sprite.play("fall")
+		MovementComponent.PossibleStates.TURNING_ON:
+			base_sprite.play("turn_on")
 
 
 func _on_base_sprite_frame_changed() -> void:
@@ -158,3 +159,9 @@ func _on_light_dimmer_percentage_passed(current_percentage: float) -> void:
 	if current_percentage > 0.3:
 		_is_dimming = true
 	flame_sprite.light_radius_scale *= (0.9)
+
+
+func _on_base_sprite_animation_finished() -> void:
+	match base_sprite.animation:
+		"turn_on":
+			movement_component.end_turn_on()

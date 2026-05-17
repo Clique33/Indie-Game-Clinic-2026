@@ -2,7 +2,7 @@ extends Component
 class_name MovementComponent
 
 
-enum PossibleStates {IDLE, WALKING, GOING_DOWN, GOING_UP}
+enum PossibleStates {IDLE, WALKING, GOING_DOWN, GOING_UP,TURNING_ON}
 
 
 signal changed_facing(left : bool)
@@ -15,6 +15,7 @@ signal landed
 @export var jump_velocity : float = -500
 
 
+var current_state : String
 var _is_facing_left : bool = false
 var _on_air : bool = false
 var _is_walking : bool = false
@@ -90,6 +91,7 @@ func get_is_facing_left() -> bool:
 
 func _on_state_machine_player_transited(from: Variant, to: Variant) -> void:
 	var state : PossibleStates
+	current_state = to
 	match to:
 		"Idle":
 			state = PossibleStates.IDLE
@@ -101,5 +103,7 @@ func _on_state_machine_player_transited(from: Variant, to: Variant) -> void:
 			state = PossibleStates.GOING_DOWN
 		"GoingUp":
 			state = PossibleStates.GOING_UP
+		"TurningOn":
+			state = PossibleStates.TURNING_ON
 			
 	changed_state.emit(state)

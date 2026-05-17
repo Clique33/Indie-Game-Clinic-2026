@@ -30,6 +30,7 @@ var initial_position : Vector2
 var direction_vector : Vector2
 var current_speed : float
 var distance_to_player : float
+var _is_dead : bool = false
 
 
 @onready var sprite: AnimatedSprite2D = $Sprite
@@ -37,6 +38,8 @@ var distance_to_player : float
 @onready var mouth_occluder: LightOccluder2D = $Sprite/Lighting/MouthOccluder
 @onready var hit_box: Area2D = $HitBox
 @onready var state_machine_player: StateMachinePlayer = $StateMachineManager/StateMachinePlayer
+@onready var right_eye: PointLight2D = $Sprite/Lighting/RightEyeOccluder/RightEye
+@onready var left_eye: PointLight2D = $Sprite/Lighting/LeftEyeOccluder/LeftEye
 
 
 func _ready() -> void:
@@ -46,6 +49,10 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
+	if _is_dead:
+		return
+	if Input.is_action_just_released("ui_cancel"):
+		die()
 	if player:
 		distance_to_player = abs(global_position.distance_to(player.global_position))
 		transition_state_machine()
@@ -57,6 +64,23 @@ func _physics_process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("turn_on"):
 		look_to(true)
+
+
+func die() -> void:
+	_is_dead = true
+	sprite.material = preload("uid://dsk1ktabdq4vd")
+	var tween : Tween = create_tween()
+	var death_animation_time : float = 1.5
+	tween.tween_property(
+				sprite.material, 
+				"shader_parameter/DissolverValue", 
+				0, 
+				death_animation_time)
+	tween.parallel().tween_property(right_eye,"energy",0,death_animation_time/2)
+	tween.parallel().tween_property(left_eye,"energy",0,death_animation_time/2)
+	await tween.finished
+	queue_free()
+
 
 
 func is_right() -> bool:

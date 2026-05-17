@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bmebh8syonlju" path="res://entities/player/player.tscn" id="1_yggfj"]
 [ext_resource type="PackedScene" uid="uid://fi8thhimw1r0" path="res://entities/lamps/lamp.tscn" id="2_eig8f"]
 [ext_resource type="Script" uid="uid://ctc2tpcd11a54" path="res://tests/enemies.gd" id="4_mm0ke"]
-[ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/bonfire.tscn" id="4_ry45r"]
+[ext_resource type="PackedScene" uid="uid://4f35o1224dyp" path="res://entities/lamps/bonfire.tscn" id="4_ry45r"]
 [ext_resource type="PackedScene" uid="uid://bpv38cudtipdr" path="res://levels/level.tscn" id="5_dsb46"]
 [ext_resource type="PackedScene" uid="uid://brxra10f281ro" path="res://entities/enemies/enemy.tscn" id="5_uofsi"]
 

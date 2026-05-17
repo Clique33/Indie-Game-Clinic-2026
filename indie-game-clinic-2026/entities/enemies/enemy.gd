@@ -40,6 +40,7 @@ var _is_dead : bool = false
 @onready var state_machine_player: StateMachinePlayer = $StateMachineManager/StateMachinePlayer
 @onready var right_eye: PointLight2D = $Sprite/Lighting/RightEyeOccluder/RightEye
 @onready var left_eye: PointLight2D = $Sprite/Lighting/LeftEyeOccluder/LeftEye
+@onready var death_player: AudioStreamPlayer2D = $DeathPlayer
 
 
 func _ready() -> void:
@@ -71,6 +72,8 @@ func die() -> void:
 	sprite.material = preload("uid://dsk1ktabdq4vd")
 	var tween : Tween = create_tween()
 	var death_animation_time : float = 1.5
+	death_player.pitch_scale = randf_range(1.3,2.0)
+	death_player.play()
 	tween.tween_property(
 				sprite.material, 
 				"shader_parameter/DissolverValue", 

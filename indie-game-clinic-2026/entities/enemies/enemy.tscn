@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://d2ipbppwstm06" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="8_vabdn"]
 [ext_resource type="Script" uid="uid://byvvdvximqxhm" path="res://addons/imjp94.yafsm/src/conditions/BooleanCondition.gd" id="10_3udgd"]
 [ext_resource type="Script" uid="uid://dj7ds338g1c73" path="res://entities/enemies/debug.gd" id="10_sb13e"]
+[ext_resource type="AudioStream" uid="uid://djhc08ns43rvm" path="res://assets/sfx/enemy_death2.wav" id="12_vabdn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twyc1"]
 atlas = ExtResource("2_5lf1o")
@@ -632,6 +633,10 @@ offset_bottom = 40.0
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "State : "
+
+[node name="DeathPlayer" type="AudioStreamPlayer2D" parent="." unique_id=1908166066]
+stream = ExtResource("12_vabdn")
+attenuation = 2.4622886
 
 [connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
 [connection signal="transited" from="StateMachineManager/StateMachinePlayer" to="StateMachineManager" method="_on_state_machine_player_transited"]

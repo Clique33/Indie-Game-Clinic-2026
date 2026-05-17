@@ -3,10 +3,6 @@ class_name Lamp
 
 
 signal update_scare_area_radius(multiplier : float)
-@warning_ignore("unused_signal")
-signal scare_enemy(lamp : Lamp)
-@warning_ignore("unused_signal")
-signal enemy_is_safe_from(lamp : Lamp)
 
 
 @export var turned_on_energy : float = 1
@@ -14,9 +10,10 @@ signal enemy_is_safe_from(lamp : Lamp)
 @export var time_to_alternate : float = .2
 
 
+var enemies_in_range : Array[Enemy] = []
 var _elapsed_time_since_turned_on : float
 var is_turned_on : bool = false
-var _player_in_range : Player = null
+var player_in_range : Player = null
 
 @onready var flame_sprite: AnimatedSprite2D = $FlameSprite
 @onready var point_light: PointLight2D = $FlameSprite/PointLight2D
@@ -34,7 +31,7 @@ func turn_on(from_player : bool = true, _time: float = time_to_alternate) -> voi
 	if is_turned_on:
 		return
 	if from_player:
-		if not _player_in_range or _player_in_range.can_ignite():
+		if not player_in_range or player_in_range.can_ignite():
 			return
 	ignite_player.play(0.15)
 	buzzing_player.play()
@@ -44,6 +41,7 @@ func turn_on(from_player : bool = true, _time: float = time_to_alternate) -> voi
 	play("turned_on"+str(randi_range(0,1)))
 	is_turned_on = true
 	_elapsed_time_since_turned_on = 0
+	scare_enemies_in_range()
 	light_dimmer.start(time_to_fully_dim)
 
 
@@ -61,14 +59,18 @@ func turn_off(time: float = time_to_alternate) -> void:
 	tween.parallel().tween_property(flame_sprite,"scale",Vector2.ZERO,time)
 	await tween.finished
 	is_turned_on = false
+	free_enemies_in_range()
 	play("turned_off")
 
 
-func alternate(time : float = time_to_alternate) -> void:
-	if not is_turned_on:
-		turn_on(time)
-	else:
-		turn_off(time)
+func scare_enemies_in_range() -> void:
+	for enemy : Enemy in enemies_in_range:
+		enemy.run_away_from(self)
+
+
+func free_enemies_in_range() -> void:
+	for enemy : Enemy in enemies_in_range:
+		enemy.stop_running_away_from(self)
 
 
 func _on_light_dimmer_finished() -> void:

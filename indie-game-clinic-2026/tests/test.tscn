@@ -30,7 +30,7 @@ script = ExtResource("4_mm0ke")
 
 [node name="Enemy" parent="Enemies" unique_id=785337415 node_paths=PackedStringArray("player") instance=ExtResource("5_uofsi")]
 z_index = 3
-position = Vector2(77.38794, 576.19147)
+position = Vector2(-111.95532, 555.4415)
 player = NodePath("../../Player")
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="." unique_id=2140322039]

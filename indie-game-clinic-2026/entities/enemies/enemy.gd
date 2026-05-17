@@ -42,6 +42,7 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if player:
+		transition_state_machine()
 		look_to(is_right())
 	velocity = direction_vector*current_speed
 	move_and_slide()
@@ -82,7 +83,6 @@ func stop_running_away_from(_danger : Lamp) -> void:
 func attack_player() -> void:
 	direction_vector = global_position.direction_to(player.global_position)
 	current_speed = attack_speed
-	print("atacking")
 
 
 func stalk_player() -> void:
@@ -111,6 +111,12 @@ func look_to(right : bool) -> void:
 		lighting.position.x = LIGHTING_X_ORIGINAL
 		hit_box.position.x = HITBOX_X_ORIGINAL
 	sprite.flip_h = right
+
+
+func transition_state_machine() -> void:
+	state_machine_player.set_param("player_is_vulnerable",player._is_vulnerable)
+	state_machine_player.set_param("player_is_safe",player._is_safe)
+	state_machine_player.set_param("player_is_dimming",player._is_dimming)
 
 
 func _on_hit_box_body_entered(body: Node2D) -> void:

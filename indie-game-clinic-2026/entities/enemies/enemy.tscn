@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://b47k3uw57tkrm" path="res://addons/imjp94.yafsm/src/states/State.gd" id="6_sb13e"]
 [ext_resource type="Script" uid="uid://p5r7y7oaxpjt" path="res://addons/imjp94.yafsm/src/transitions/Transition.gd" id="7_3udgd"]
 [ext_resource type="Script" uid="uid://d2ipbppwstm06" path="res://addons/imjp94.yafsm/src/conditions/Condition.gd" id="8_vabdn"]
+[ext_resource type="Script" uid="uid://byvvdvximqxhm" path="res://addons/imjp94.yafsm/src/conditions/BooleanCondition.gd" id="10_3udgd"]
 [ext_resource type="Script" uid="uid://dj7ds338g1c73" path="res://entities/enemies/debug.gd" id="10_sb13e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_twyc1"]
@@ -180,42 +181,37 @@ radius = 2.236068
 [sub_resource type="Resource" id="Resource_nrfwl"]
 script = ExtResource("6_sb13e")
 name = "Entry"
-metadata/graph_offset = Vector2(221, 302.5)
+metadata/graph_offset = Vector2(821, 22.5)
 
 [sub_resource type="Resource" id="Resource_5xow2"]
 script = ExtResource("6_sb13e")
 name = "Idle"
-metadata/graph_offset = Vector2(461, 142.5)
+metadata/graph_offset = Vector2(701, 82.5)
 
 [sub_resource type="Resource" id="Resource_xmuku"]
 script = ExtResource("6_sb13e")
 name = "RunningAway"
-metadata/graph_offset = Vector2(883, 102.5)
+metadata/graph_offset = Vector2(3, 182.5)
 
 [sub_resource type="Resource" id="Resource_2ggct"]
 script = ExtResource("6_sb13e")
 name = "Attacking"
-metadata/graph_offset = Vector2(697.5, 302.5)
+metadata/graph_offset = Vector2(937.5, 442.5)
 
 [sub_resource type="Resource" id="Resource_53k0f"]
 script = ExtResource("6_sb13e")
 name = "GoingBackToIdle"
-metadata/graph_offset = Vector2(433.5, -37.5)
-
-[sub_resource type="Resource" id="Resource_gj3y3"]
-script = ExtResource("6_sb13e")
-name = "PlayerBecameVulnerable"
-metadata/graph_offset = Vector2(147.5, 142.5)
+metadata/graph_offset = Vector2(393.5, 2.4999695)
 
 [sub_resource type="Resource" id="Resource_wy1il"]
 script = ExtResource("6_sb13e")
 name = "Stalking"
-metadata/graph_offset = Vector2(461, 302.5)
+metadata/graph_offset = Vector2(421, 442.5)
 
 [sub_resource type="Resource" id="Resource_pbvo2"]
 script = ExtResource("6_sb13e")
 name = "PlayerDead"
-metadata/graph_offset = Vector2(907.5, 302.5)
+metadata/graph_offset = Vector2(1069.5, 302.5)
 
 [sub_resource type="Resource" id="Resource_u01qb"]
 script = ExtResource("7_3udgd")
@@ -234,20 +230,9 @@ conditions = {
 "light_within_range": SubResource("Resource_4teby")
 }
 
-[sub_resource type="Resource" id="Resource_56i32"]
-script = ExtResource("8_vabdn")
-name = "player_is_dimming"
-
-[sub_resource type="Resource" id="Resource_sb13e"]
-script = ExtResource("7_3udgd")
-from = "Idle"
-to = "PlayerBecameVulnerable"
-conditions = {
-"player_is_dimming": SubResource("Resource_56i32")
-}
-
 [sub_resource type="Resource" id="Resource_rag6w"]
-script = ExtResource("8_vabdn")
+script = ExtResource("10_3udgd")
+value = true
 name = "player_is_vulnerable"
 
 [sub_resource type="Resource" id="Resource_tqj2o"]
@@ -256,6 +241,19 @@ from = "Idle"
 to = "Attacking"
 conditions = {
 "player_is_vulnerable": SubResource("Resource_rag6w")
+}
+
+[sub_resource type="Resource" id="Resource_3udgd"]
+script = ExtResource("10_3udgd")
+value = true
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_vabdn"]
+script = ExtResource("7_3udgd")
+from = "Idle"
+to = "Stalking"
+conditions = {
+"player_is_dimming": SubResource("Resource_3udgd")
 }
 
 [sub_resource type="Resource" id="Resource_ku6gj"]
@@ -282,18 +280,6 @@ conditions = {
 "back_to_initial_pos": SubResource("Resource_y4tt3")
 }
 
-[sub_resource type="Resource" id="Resource_3udgd"]
-script = ExtResource("8_vabdn")
-name = "player_is_dimming"
-
-[sub_resource type="Resource" id="Resource_vabdn"]
-script = ExtResource("7_3udgd")
-from = "GoingBackToIdle"
-to = "PlayerBecameVulnerable"
-conditions = {
-"player_is_dimming": SubResource("Resource_3udgd")
-}
-
 [sub_resource type="Resource" id="Resource_712qu"]
 script = ExtResource("8_vabdn")
 name = "light_within_range"
@@ -307,9 +293,17 @@ conditions = {
 }
 
 [sub_resource type="Resource" id="Resource_lmmiu"]
+script = ExtResource("10_3udgd")
+value = true
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_vkm0h"]
 script = ExtResource("7_3udgd")
-from = "PlayerBecameVulnerable"
+from = "GoingBackToIdle"
 to = "Stalking"
+conditions = {
+"player_is_dimming": SubResource("Resource_lmmiu")
+}
 
 [sub_resource type="Resource" id="Resource_nkaw1"]
 script = ExtResource("8_vabdn")
@@ -323,16 +317,17 @@ conditions = {
 "light_within_range": SubResource("Resource_nkaw1")
 }
 
-[sub_resource type="Resource" id="Resource_vkm0h"]
-script = ExtResource("8_vabdn")
-name = "player_is_dimming"
+[sub_resource type="Resource" id="Resource_atxrh"]
+script = ExtResource("10_3udgd")
+value = true
+name = "player_is_safe"
 
 [sub_resource type="Resource" id="Resource_llg7d"]
 script = ExtResource("7_3udgd")
 from = "Attacking"
 to = "Stalking"
 conditions = {
-"player_is_dimming": SubResource("Resource_vkm0h")
+"player_is_safe": SubResource("Resource_atxrh")
 }
 
 [sub_resource type="Resource" id="Resource_5ltra"]
@@ -347,16 +342,34 @@ conditions = {
 "player_is_dead": SubResource("Resource_5ltra")
 }
 
-[sub_resource type="Resource" id="Resource_atxrh"]
-script = ExtResource("8_vabdn")
+[sub_resource type="Resource" id="Resource_1lk5u"]
+script = ExtResource("10_3udgd")
 name = "player_is_vulnerable"
+
+[sub_resource type="Resource" id="Resource_ux558"]
+script = ExtResource("7_3udgd")
+from = "Attacking"
+to = "GoingBackToIdle"
+conditions = {
+"player_is_vulnerable": SubResource("Resource_1lk5u")
+}
+
+[sub_resource type="Resource" id="Resource_ct7fg"]
+script = ExtResource("10_3udgd")
+value = true
+name = "player_is_vulnerable"
+
+[sub_resource type="Resource" id="Resource_0uqau"]
+script = ExtResource("10_3udgd")
+name = "player_is_safe"
 
 [sub_resource type="Resource" id="Resource_ftsks"]
 script = ExtResource("7_3udgd")
 from = "Stalking"
 to = "Attacking"
 conditions = {
-"player_is_vulnerable": SubResource("Resource_atxrh")
+"player_is_safe": SubResource("Resource_0uqau"),
+"player_is_vulnerable": SubResource("Resource_ct7fg")
 }
 
 [sub_resource type="Resource" id="Resource_dec5i"]
@@ -371,6 +384,18 @@ conditions = {
 "light_within_range": SubResource("Resource_dec5i")
 }
 
+[sub_resource type="Resource" id="Resource_isubm"]
+script = ExtResource("10_3udgd")
+name = "player_is_dimming"
+
+[sub_resource type="Resource" id="Resource_kb8hg"]
+script = ExtResource("7_3udgd")
+from = "Stalking"
+to = "GoingBackToIdle"
+conditions = {
+"player_is_dimming": SubResource("Resource_isubm")
+}
+
 [sub_resource type="Resource" id="Resource_2k7wq"]
 script = ExtResource("5_56i32")
 states = {
@@ -378,13 +403,13 @@ states = {
 "Entry": SubResource("Resource_nrfwl"),
 "GoingBackToIdle": SubResource("Resource_53k0f"),
 "Idle": SubResource("Resource_5xow2"),
-"PlayerBecameVulnerable": SubResource("Resource_gj3y3"),
 "PlayerDead": SubResource("Resource_pbvo2"),
 "RunningAway": SubResource("Resource_xmuku"),
 "Stalking": SubResource("Resource_wy1il")
 }
 transitions = {
 "Attacking": {
+"GoingBackToIdle": SubResource("Resource_ux558"),
 "PlayerDead": SubResource("Resource_t287r"),
 "RunningAway": SubResource("Resource_6fcqh"),
 "Stalking": SubResource("Resource_llg7d")
@@ -394,22 +419,20 @@ transitions = {
 },
 "GoingBackToIdle": {
 "Idle": SubResource("Resource_21xsh"),
-"PlayerBecameVulnerable": SubResource("Resource_vabdn"),
-"RunningAway": SubResource("Resource_6ak4d")
+"RunningAway": SubResource("Resource_6ak4d"),
+"Stalking": SubResource("Resource_vkm0h")
 },
 "Idle": {
 "Attacking": SubResource("Resource_tqj2o"),
-"PlayerBecameVulnerable": SubResource("Resource_sb13e"),
-"RunningAway": SubResource("Resource_bjdlj")
-},
-"PlayerBecameVulnerable": {
-"Stalking": SubResource("Resource_lmmiu")
+"RunningAway": SubResource("Resource_bjdlj"),
+"Stalking": SubResource("Resource_vabdn")
 },
 "RunningAway": {
 "GoingBackToIdle": SubResource("Resource_8edke")
 },
 "Stalking": {
 "Attacking": SubResource("Resource_ftsks"),
+"GoingBackToIdle": SubResource("Resource_kb8hg"),
 "RunningAway": SubResource("Resource_0j0it")
 }
 }
@@ -419,11 +442,6 @@ collision_layer = 4
 collision_mask = 4
 motion_mode = 1
 script = ExtResource("1_owq46")
-back_to_idle_speed = null
-attack_speed = null
-run_away_speed = null
-stalk_speed = null
-stalk_distance = null
 
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=370643102]
 self_modulate = Color(0.14044744, 0.14044744, 0.14044744, 1)

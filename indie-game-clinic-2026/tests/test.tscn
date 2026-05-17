@@ -100,6 +100,7 @@ stalk_speed = 200.0
 energy = 0.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=78310192]
+visible = false
 color = Color(0, 0, 0, 1)
 
 [node name="Bonfire" parent="." unique_id=956425402 instance=ExtResource("4_ry45r")]

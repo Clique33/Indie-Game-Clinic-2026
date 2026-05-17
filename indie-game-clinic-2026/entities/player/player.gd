@@ -20,9 +20,15 @@ var flame_sprite: Flame:
 		else:
 			vulnerable_light.visible = false
 			_is_vulnerable = false
+			_is_dimming = false
+			light_dimmer.start(time_to_fully_dim)
+
+
 var light_sources_in_range : Array[Lamp] = []
 var _is_dead : bool = false
 var _is_vulnerable : bool = false
+var _is_safe : bool = false
+var _is_dimming : bool = false
 
 
 @onready var vulnerable_light: PointLight2D = $VulnerableLight
@@ -49,7 +55,8 @@ func _ready() -> void:
 func _physics_process(_delta: float) -> void:
 	if _is_dead:
 		return
-	if _is_vulnerable:
+	_is_safe = are_there_any_light_sources_lit()
+	if _is_vulnerable and not _is_safe:
 		player_is_vulnerable.emit()
 	handle_light_lamps()
 	handle_shoot_flame()
@@ -84,11 +91,9 @@ func handle_spawn_flame() -> void:
 	if not can_ignite() or light_sources_in_range.is_empty():
 		return
 	if Input.is_action_just_released("turn_on"):
-		if not are_there_any_light_sources_lit():
+		if not _is_safe:
 			return
 		flame_sprite = flame_spawner_component.spawn_flame(1.5)
-		if flame_sprite:
-			light_dimmer.start(time_to_fully_dim)
 
 
 func are_there_any_light_sources_lit() -> bool:
@@ -155,7 +160,7 @@ func _on_light_dimmer_percentage_passed(current_percentage: float) -> void:
 	if not flame_sprite:
 		return
 	if current_percentage > 0.3:
-		player_is_dimming.emit()
+		_is_dimming = true
 	flame_sprite.light_radius_scale *= (1-light_dimmer.percentage_to_signal)
 
 

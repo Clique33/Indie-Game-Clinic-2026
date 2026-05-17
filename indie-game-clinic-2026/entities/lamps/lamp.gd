@@ -5,6 +5,7 @@ class_name Lamp
 signal update_scare_area_radius(multiplier : float)
 signal turned_on
 signal turned_off
+signal player_is_safe
 
 
 @export var turned_on_energy : float = 1
